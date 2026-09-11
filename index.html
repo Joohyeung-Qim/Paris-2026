@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Paris 2026 프로젝트의 첫 번째 HTML 샘플 페이지">
+  <title>Paris 2026 · Hello, Paris</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23192743'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='serif' font-size='24' fill='white'%3EP%3C/text%3E%3C/svg%3E">
+  <style>
+    * { box-sizing: border-box; }
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #192743; background: #f4f6fa; }
+    body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; }
+    header, main, footer { width: min(100% - 3rem, 1080px); margin-inline: auto; }
+    header { padding-block: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #d4dbe7; }
+    .brand { font-weight: 750; letter-spacing: .06em; }
+    .edition { font-size: .875rem; color: #566278; }
+    main { flex: 1; display: grid; align-content: center; padding-block: 5rem; }
+    .eyebrow { font-size: .875rem; font-weight: 700; letter-spacing: .16em; color: #a32c38; margin: 0 0 1.5rem; }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(3.5rem, 11vw, 8rem); line-height: 1.05; letter-spacing: -.045em; margin: 0; }
+    h1 span { color: #a32c38; }
+    .intro { font-size: 1.125rem; line-height: 1.8; color: #566278; margin: 2rem 0; word-break: keep-all; }
+    a { display: inline-flex; width: fit-content; padding: 1rem 1.4rem; color: white; background: #192743; border-radius: .4rem; text-decoration: none; font-weight: 650; line-height: 1.5; }
+    a:hover { background: #2e4269; }
+    a:focus-visible { outline: 3px solid #a32c38; outline-offset: 5px; }
+    footer { padding-block: 1.5rem; border-top: 1px solid #d4dbe7; color: #566278; font-size: .875rem; line-height: 1.6; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    @media (max-width: 480px) { header, main, footer { width: calc(100% - 2rem); } header { align-items: flex-start; flex-direction: column; } main { padding-block: 3.5rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">PARIS 2026</div>
+    <div class="edition">첫 번째 페이지 / 01</div>
+  </header>
+  <main>
+    <p class="eyebrow">BONJOUR, WORLD</p>
+    <h1>Hello,<br><span>Paris.</span></h1>
+    <p class="intro">Paris 2026 프로젝트의 시작입니다.<br>이곳에 새로운 이야기와 아이디어를 채워갑니다.</p>
+    <a href="https://github.com/Joohyeung-Qim/Paris-2026">GitHub 저장소 보기</a>
+  </main>
+  <footer>
+    <span>Paris 2026</span>
+    <span>Sample page · HTML &amp; CSS</span>
+  </footer>
+</body>
+</html>
