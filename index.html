@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="2026년 10월 17일부터 20일까지 파리 여행 일정과 지도, 예약, 메모">
-<meta name="theme-color" content="#f5f5f7">
+<meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-title" content="Paris 2026 Plans">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Paris 2026 Plans</title>
@@ -19,20 +19,20 @@
 </head>
 <body>
 <a class="skip" href="#main">본문으로</a>
-<header class="appbar"><div class="bar-inner"><span class="brand"><i class="flag" aria-hidden="true"></i>Paris 2026 Plans</span><span class="paris-clock" id="paris-clock">파리 현지시간</span></div></header>
+<header class="appbar"><div class="bar-inner"><span class="brand"><i class="flag" aria-hidden="true"></i><span>2026</span></span><span class="paris-clock" id="paris-clock">현지시간</span></div></header>
 <main id="main">
-<section class="trip-head"><div><p class="eyebrow">2026년 10월 17–20일</p><h1>파리 여행</h1><p class="muted">3박 4일 · 혼자 여행</p></div><span class="countdown" id="countdown">10월 17일 출발</span></section>
+<section class="trip-head"><div><h1>Paris<span class="title-dot">.</span></h1><p class="trip-caption">10월 17–20일 <span>3박 4일</span></p></div><span class="countdown" id="countdown">10월 17일 출발</span></section>
 <div class="date-sticky"><div id="dates" class="dates" role="group" aria-label="날짜 선택"></div></div>
 <div id="storage-warning" class="notice" hidden>이 브라우저에 저장할 수 없습니다. 변경 후 백업 파일을 내려받아 주세요.</div>
 <div id="offline-banner" class="notice" hidden>오프라인 · 저장된 일정만 표시합니다. 지도와 외부 링크는 인터넷 연결이 필요합니다.</div>
 <section id="view-schedule" class="view" aria-labelledby="day-title">
-<div class="day-top"><div><p class="eyebrow" id="day-region"></p><h2 id="day-title"></h2></div><button type="button" class="icon-button" id="add-item" aria-label="일정 추가">＋</button></div>
+<div class="day-top"><div><p class="eyebrow" id="day-number"></p><h2 id="day-title"></h2><p class="day-region" id="day-region"></p></div><button type="button" class="icon-button" id="add-item" aria-label="일정 추가"><span aria-hidden="true">＋</span></button></div>
 <div id="day-important" class="important"></div>
-<div class="day-tools"><div class="segmented" role="group" aria-label="일정 표시 범위"><button type="button" data-filter="key" aria-pressed="true">핵심</button><button type="button" data-filter="all" aria-pressed="false">전체</button></div><button type="button" class="text-button" id="route-shortcut">동선 지도 <span aria-hidden="true">↗</span></button></div>
-<div class="progress-row"><span id="day-progress"></span><span class="muted">파리 현지시간</span></div>
+<div class="day-tools"><div class="segmented" role="group" aria-label="일정 표시 범위"><button type="button" data-filter="key" aria-pressed="true">핵심</button><button type="button" data-filter="all" aria-pressed="false">전체</button></div><button type="button" class="text-button" id="route-shortcut">지도 보기 <span aria-hidden="true">↗</span></button></div>
+<div class="progress-row"><span id="day-progress"></span><span class="muted">현지시간 기준</span></div>
 <ol id="timeline" class="timeline"></ol>
 <div id="empty-state" class="panel" hidden>표시할 일정이 없습니다. 전체 보기를 선택하거나 일정을 추가하세요.</div>
-<button type="button" class="wide secondary" id="calendar-day">이 날짜를 캘린더에 저장</button>
+<button type="button" class="wide secondary" id="calendar-day">캘린더에 저장</button>
 </section>
 <section id="view-map" class="view" hidden aria-labelledby="map-title">
 <div class="day-top"><div><p class="eyebrow" id="map-region"></p><h2 id="map-title">동선 지도</h2></div><button type="button" class="small-button" id="fit-map">전체 보기</button></div>
@@ -41,25 +41,25 @@
 <p class="map-note">번호는 방문 순서 · 점선은 위치 연결선입니다.<br>실제 이동 경로·시간은 구간별 길찾기에서 확인하세요.</p>
 <div id="map-selection" class="map-selection" hidden></div>
 <div id="route-list" class="route-list"></div>
-<p class="muted small">지도 위치는 주소 기준입니다. Large는 일드세갱의 대략적 위치, NANNA는 강변 진입 지점을 표시합니다.</p>
+<p class="muted small">지도 위치는 주소 기준입니다. Large는 Île Seguin의 대략적 위치, NANNA는 강변 진입 지점을 표시합니다.</p>
 </section>
 <section id="view-bookings" class="view" hidden aria-labelledby="bookings-title">
 <div class="day-top"><div><p class="eyebrow">여행 전체</p><h2 id="bookings-title">예약·확인</h2></div><span id="booking-progress" class="pill"></span></div>
-<div class="important"><strong>입장권 약 €42.50</strong><span>Large €15 예정 + 오랑주리 €12.50 + 피노 €15<br>Large 개관 주말 정책에 따라 변동</span></div>
+<div class="important"><strong>입장권 약 €42.50</strong><span>Large €15 · Orangerie €12.50 · Pinault €15<br>Large 개관 주말 정책에 따라 변동</span></div>
 <p class="section-note">아래 시간은 예약 목표입니다. 항공·열차·숙소 시간은 전달받은 정보 기준입니다.</p>
 <div id="bookings-list"></div>
-<section class="panel"><h3>교통 확인</h3><div class="link-stack"><a href="https://www.parisaeroport.fr/en/passengers/transport-parking/public-transport-paris/rer-b/cdg" target="_blank" rel="noopener noreferrer">공항 → 파리 · RER B <span>↗</span></a><a href="https://www.bonjour-ratp.fr/lignes-metro/ligne-4/" target="_blank" rel="noopener noreferrer">메트로 4호선 운행 <span>↗</span></a></div><p class="small muted">공항: CDGVAL → RER B → 북역 → 4호선 → Réaumur–Sébastopol. 공사·운행 변경 확인.</p></section>
+<section class="panel"><h3>교통 확인</h3><div class="link-stack"><a href="https://www.parisaeroport.fr/en/passengers/transport-parking/public-transport-paris/rer-b/cdg" target="_blank" rel="noopener noreferrer">공항 → 파리 · RER B <span>↗</span></a><a href="https://www.bonjour-ratp.fr/lignes-metro/ligne-4/" target="_blank" rel="noopener noreferrer">메트로 4호선 운행 <span>↗</span></a></div><p class="small muted">공항: CDGVAL → RER B → Gare du Nord → 4호선 → Réaumur–Sébastopol. 공사·운행 변경 확인.</p></section>
 </section>
 <section id="view-more" class="view" hidden aria-labelledby="more-title">
 <div class="day-top"><div><p class="eyebrow">여행 전체</p><h2 id="more-title">여행 정보</h2></div></div>
 <section class="panel"><h3>숙소</h3><p class="address">60 Rue du Vertbois<br>75003 Paris</p><div class="info-pair"><span>체크인 <b>10/17 13:00</b></span><span>체크아웃 <b>10/20 11:00</b></span></div><div class="button-row" id="home-links"></div></section>
-<section class="panel"><h3>출발·도착</h3><div class="transport-row"><span>10/17</span><div><strong>07:20 파리 도착</strong><p>CDG 터미널 1</p></div></div><div class="transport-row"><span>10/20</span><div><strong>16:18 파리 북역 출발</strong><p>열차 9463 → 19:50 암스테르담 중앙역</p></div></div><p class="warning-text">북역 도착 목표 15:20 · 짐 수령 14:15–14:45</p></section>
+<section class="panel"><h3>출발·도착</h3><div class="transport-row"><span>10/17</span><div><strong>07:20 파리 도착</strong><p>CDG · Terminal 1</p></div></div><div class="transport-row"><span>10/20</span><div><strong>16:18 Gare du Nord 출발</strong><p>열차 9463 → 19:50 Amsterdam Centraal</p></div></div><p class="warning-text">Gare du Nord 도착 목표 15:20 · 짐 수령 14:15–14:45</p></section>
 <details class="panel"><summary>장소 찾기</summary><div class="details-body"><label class="sr-only" for="place-search">장소·주소 검색</label><input type="search" id="place-search" placeholder="장소·주소 검색" autocomplete="off"><div id="places-list"></div></div></details>
 <details class="panel"><summary>대체 장소</summary><div id="alternatives" class="details-body"></div></details>
 <section class="panel"><h3>준비 목록</h3><div id="packing-list"></div></section>
 <section class="panel"><div class="section-row"><h3>지출 기록</h3><strong id="expense-total">€0.00</strong></div><form id="expense-form" class="expense-form"><label><span class="sr-only">지출 내용</span><input name="label" placeholder="내용" maxlength="60" required></label><label><span class="sr-only">유로 금액</span><input name="amount" type="number" inputmode="decimal" min="0.01" max="99999" step="0.01" placeholder="€" required></label><button type="submit" class="primary">추가</button></form><div id="expenses"></div></section>
 <section class="panel"><h3>일정·데이터</h3><div class="data-actions"><button class="secondary" type="button" id="calendar-all">전체 캘린더 저장</button><button class="secondary" type="button" id="backup-export">백업 다운로드</button><button class="secondary" type="button" id="backup-import">백업 불러오기</button><button class="secondary" type="button" id="print-plan">일정 인쇄</button></div><input type="file" id="import-file" accept="application/json,.json" hidden><p class="small muted">완료·메모·예약·수정 내용은 이 기기에 저장됩니다. 다른 기기로 옮길 때 백업을 사용하세요.</p><p class="small muted" id="offline-status">오프라인 저장은 웹사이트 주소에서 지원됩니다.</p></section>
-<details class="panel"><summary>정보 기준·사용 방법</summary><div class="details-body"><p>일정·요금은 첨부 계획 기준(2026.09.12). 관광 시간은 계획이며 실제 예약·잔여석을 뜻하지 않습니다.</p><p>Large 개관·입장 방식, 전시와 영업시간은 방문 전에 공식 페이지에서 확인하세요. 숙소 짐 보관은 사전 협의가 필요합니다.</p><p>오랑주리·피노 정기 무료일은 체류일과 겹치지 않습니다. Maison Pompidou는 퐁피두 본관과 다른 공간입니다.</p><p>Safari 공유 → 홈 화면에 추가. 이름은 Paris 2026 Plans, 아이콘은 프랑스 국기입니다.</p><p>오프라인에서는 마지막으로 저장된 일정과 메모를 볼 수 있습니다. 지도 바탕·공식 사이트·Google 지도는 연결이 필요합니다.</p><a href="./vendor/LEAFLET-LICENSE.txt">지도 라이브러리 라이선스</a></div></details>
+<details class="panel"><summary>정보 기준·사용 방법</summary><div class="details-body"><p>일정·요금은 첨부 계획 기준(2026.09.12). 관광 시간은 계획이며 실제 예약·잔여석을 뜻하지 않습니다.</p><p>Large 개관·입장 방식, 전시와 영업시간은 방문 전에 공식 페이지에서 확인하세요. 숙소 짐 보관은 사전 협의가 필요합니다.</p><p>Musée de l’Orangerie·Pinault Collection 정기 무료일은 체류일과 겹치지 않습니다. Maison Pompidou는 퐁피두 본관과 다른 공간입니다.</p><p>Safari 공유 → 홈 화면에 추가. 이름은 Paris 2026 Plans, 아이콘은 프랑스 국기입니다.</p><p>오프라인에서는 마지막으로 저장된 일정과 메모를 볼 수 있습니다. 지도 바탕·공식 사이트·Google 지도는 연결이 필요합니다.</p><a href="./vendor/LEAFLET-LICENSE.txt">지도 라이브러리 라이선스</a></div></details>
 </section>
 <footer class="page-footer">모든 시간은 현지시간 · 변경 사항은 이 기기에 저장</footer>
 <noscript><section class="panel">이 페이지는 JavaScript가 필요합니다. Safari 설정에서 JavaScript를 켜 주세요.</section></noscript>

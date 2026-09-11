@@ -16,7 +16,7 @@ window.PARIS_DATA = {
     },
     "cdg": {
       "id": "cdg",
-      "name": "CDG 터미널 1",
+      "name": "CDG · Terminal 1",
       "address": "Paris Charles de Gaulle · Terminal 1",
       "query": "Charles de Gaulle Airport Terminal 1 France",
       "latlng": [
@@ -29,7 +29,7 @@ window.PARIS_DATA = {
     },
     "partisan": {
       "id": "partisan",
-      "name": "파르티잔 카페",
+      "name": "Partisan Café Artisanal",
       "address": "36 Rue de Turbigo, 75003 Paris",
       "query": "Partisan Café Artisanal 36 Rue de Turbigo Paris",
       "latlng": [
@@ -42,7 +42,7 @@ window.PARIS_DATA = {
     },
     "dsm": {
       "id": "dsm",
-      "name": "도버 스트리트 마켓",
+      "name": "Dover Street Market Paris",
       "address": "35–37 Rue des Francs-Bourgeois, Paris",
       "query": "Dover Street Market Paris 35 Rue des Francs Bourgeois",
       "latlng": [
@@ -55,7 +55,7 @@ window.PARIS_DATA = {
     },
     "pompidou": {
       "id": "pompidou",
-      "name": "메종 퐁피두",
+      "name": "Maison Pompidou",
       "address": "50 Rue Rambuteau, 75003 Paris",
       "query": "Maison Pompidou 50 Rue Rambuteau Paris",
       "latlng": [
@@ -68,7 +68,7 @@ window.PARIS_DATA = {
     },
     "mesures": {
       "id": "mesures",
-      "name": "메쥐르",
+      "name": "Mesures",
       "address": "58 Rue de Saintonge, Paris",
       "query": "Mesures 58 Rue de Saintonge Paris",
       "latlng": [
@@ -94,7 +94,7 @@ window.PARIS_DATA = {
     },
     "babylone": {
       "id": "babylone",
-      "name": "생로랑 바빌론",
+      "name": "Saint Laurent Babylone",
       "address": "9 Rue de Grenelle, Paris",
       "query": "Saint Laurent Babylone 9 Rue de Grenelle Paris",
       "latlng": [
@@ -120,7 +120,7 @@ window.PARIS_DATA = {
     },
     "orangerie": {
       "id": "orangerie",
-      "name": "오랑주리 미술관",
+      "name": "Musée de l’Orangerie",
       "address": "Jardin des Tuileries, 75001 Paris",
       "query": "Musée de l’Orangerie Paris",
       "latlng": [
@@ -133,7 +133,7 @@ window.PARIS_DATA = {
     },
     "grand": {
       "id": "grand",
-      "name": "르 그랑 카페",
+      "name": "Le Grand Café",
       "address": "1 Place Clemenceau, 75008 Paris",
       "query": "Le Grand Café 1 Place Clemenceau Paris",
       "latlng": [
@@ -146,7 +146,7 @@ window.PARIS_DATA = {
     },
     "pinault": {
       "id": "pinault",
-      "name": "피노 컬렉션",
+      "name": "Bourse de Commerce · Pinault Collection",
       "address": "2 Rue de Viarmes, 75001 Paris",
       "query": "Bourse de Commerce Pinault Collection Paris",
       "latlng": [
@@ -159,7 +159,7 @@ window.PARIS_DATA = {
     },
     "shin": {
       "id": "shin",
-      "name": "카페 신 팔레 루아얄",
+      "name": "Café Shin Palais Royal",
       "address": "28 bis Rue de Richelieu, 75001 Paris",
       "query": "Café Shin Palais Royal 28 bis Rue de Richelieu Paris",
       "latlng": [
@@ -172,7 +172,7 @@ window.PARIS_DATA = {
     },
     "canal": {
       "id": "canal",
-      "name": "생마르탱 운하",
+      "name": "Canal Saint-Martin",
       "address": "Quai de Valmy, 75010 Paris",
       "query": "Canal Saint Martin Quai de Valmy Paris",
       "latlng": [
@@ -185,7 +185,7 @@ window.PARIS_DATA = {
     },
     "bouillon": {
       "id": "bouillon",
-      "name": "부이용 레퓌블리크",
+      "name": "Bouillon République",
       "address": "39 Boulevard du Temple, Paris",
       "query": "Bouillon République 39 Boulevard du Temple Paris",
       "latlng": [
@@ -198,7 +198,7 @@ window.PARIS_DATA = {
     },
     "nord": {
       "id": "nord",
-      "name": "파리 북역",
+      "name": "Gare du Nord",
       "address": "18 Rue de Dunkerque, 75010 Paris",
       "query": "Gare du Nord Paris",
       "latlng": [
@@ -211,7 +211,7 @@ window.PARIS_DATA = {
     },
     "ams": {
       "id": "ams",
-      "name": "암스테르담 중앙역",
+      "name": "Amsterdam Centraal",
       "address": "Stationsplein, Amsterdam",
       "query": "Amsterdam Centraal Netherlands",
       "latlng": [
@@ -224,7 +224,7 @@ window.PARIS_DATA = {
     },
     "reaumur": {
       "id": "reaumur",
-      "name": "레오뮈르–세바스토폴역",
+      "name": "Réaumur–Sébastopol",
       "address": "Réaumur–Sébastopol, Paris",
       "query": "Réaumur Sébastopol Metro Paris",
       "latlng": [
@@ -237,7 +237,7 @@ window.PARIS_DATA = {
     },
     "mitterrand": {
       "id": "mitterrand",
-      "name": "미테랑 갤러리",
+      "name": "Galerie Mitterrand",
       "address": "28 Avenue Matignon, Paris",
       "query": "Galerie Mitterrand 28 Avenue Matignon Paris",
       "latlng": [
@@ -250,7 +250,7 @@ window.PARIS_DATA = {
     },
     "cartilage": {
       "id": "cartilage",
-      "name": "카르틸라주",
+      "name": "Cartilage",
       "address": "210 Rue du Faubourg-Saint-Antoine, Paris",
       "query": "Cartilage 210 Rue du Faubourg Saint Antoine Paris",
       "latlng": [
@@ -259,11 +259,11 @@ window.PARIS_DATA = {
       ],
       "source": "https://data.geopf.fr/geocodage/search?q=210+Rue+du+Faubourg+Saint+Antoine+75012+Paris&limit=1",
       "url": "https://www.timeout.fr/paris/actualites/cartilage-nouveau-lieu-scenes-alternatives-ancien-cabaret-libanais-030526",
-      "detail": "10/17 메쥐르 대체 후보 · 공연·입장료 미확인"
+      "detail": "10/17 Mesures 대체 후보 · 공연·입장료 미확인"
     },
     "marais": {
       "id": "marais",
-      "name": "마레",
+      "name": "Le Marais",
       "address": "Le Marais, Paris",
       "query": "restaurants Le Marais Paris",
       "latlng": null,
@@ -273,7 +273,7 @@ window.PARIS_DATA = {
     },
     "saintgermain": {
       "id": "saintgermain",
-      "name": "생제르맹",
+      "name": "Saint-Germain-des-Prés",
       "address": "Saint-Germain-des-Prés, Paris",
       "query": "Saint Germain des Pres Paris",
       "latlng": null,
@@ -283,7 +283,7 @@ window.PARIS_DATA = {
     },
     "palais": {
       "id": "palais",
-      "name": "팔레 루아얄",
+      "name": "Palais-Royal",
       "address": "Palais Royal, Paris",
       "query": "Palais Royal Paris",
       "latlng": null,
@@ -297,10 +297,10 @@ window.PARIS_DATA = {
       "day": 17,
       "date": "2026-10-17",
       "weekday": "토",
-      "title": "도착 · 마레",
-      "region": "숙소 · 편집숍 · 메종 퐁피두",
+      "title": "도착 · Le Marais",
+      "region": "Partisan · Dover Street Market · Maison Pompidou",
       "important": "07:20 CDG 도착 · 13:00 체크인",
-      "brief": "짐 보관 사전 확인 · 저녁 바는 선택",
+      "brief": "짐 보관은 숙소에 미리 확인",
       "items": [
         {
           "id": "d17-0",
@@ -339,7 +339,7 @@ window.PARIS_DATA = {
           "end": "10:40",
           "after": false,
           "title": "공항 → 숙소 주변",
-          "note": "CDGVAL → RER B → 북역 → 메트로 4호선 → Réaumur–Sébastopol. 정상 운행 기준.",
+          "note": "CDGVAL → RER B → Gare du Nord → 메트로 4호선 → Réaumur–Sébastopol. 정상 운행 기준.",
           "place": "home",
           "key": false,
           "transit": true,
@@ -368,7 +368,7 @@ window.PARIS_DATA = {
           "start": "11:00",
           "end": "12:00",
           "after": false,
-          "title": "파르티잔 카페",
+          "title": "Partisan Café Artisanal",
           "note": "커피·가벼운 아침",
           "place": "partisan",
           "key": true,
@@ -413,7 +413,7 @@ window.PARIS_DATA = {
           "start": "14:15",
           "end": "14:40",
           "after": false,
-          "title": "마레로 이동",
+          "title": "Le Marais로 이동",
           "note": "도보 여유 포함",
           "place": "dsm",
           "key": false,
@@ -428,7 +428,7 @@ window.PARIS_DATA = {
           "start": "14:40",
           "end": "16:00",
           "after": false,
-          "title": "도버 스트리트 마켓",
+          "title": "Dover Street Market Paris",
           "note": "편집숍·공간 구경",
           "place": "dsm",
           "key": true,
@@ -458,7 +458,7 @@ window.PARIS_DATA = {
           "start": "16:15",
           "end": "17:00",
           "after": false,
-          "title": "메종 퐁피두",
+          "title": "Maison Pompidou",
           "note": "2026년 신규 공간 · 무료",
           "place": "pompidou",
           "key": true,
@@ -473,7 +473,7 @@ window.PARIS_DATA = {
           "start": "17:00",
           "end": "17:30",
           "after": false,
-          "title": "마레 골목 산책·숙소 복귀",
+          "title": "Le Marais 골목 산책·숙소 복귀",
           "note": "첫날 컨디션에 따라 산책 생략",
           "place": "home",
           "key": false,
@@ -518,7 +518,7 @@ window.PARIS_DATA = {
           "start": "20:00",
           "end": "21:00",
           "after": false,
-          "title": "메쥐르 · 선택",
+          "title": "Mesures",
           "note": "음악 바",
           "place": "mesures",
           "key": true,
@@ -569,10 +569,10 @@ window.PARIS_DATA = {
       "day": 18,
       "date": "2026-10-18",
       "weekday": "일",
-      "title": "Large · 생제르맹",
-      "region": "일드세갱 · 생로랑 · NANNA",
-      "important": "11:00 Large · 개관 주말 입장 확인",
-      "brief": "일드세갱까지 60–75분 계획 · 강변 산책은 선택",
+      "title": "Large · Saint-Germain",
+      "region": "Île Seguin · Saint Laurent Babylone · NANNA",
+      "important": "11:00 Large 입장 예정",
+      "brief": "개관 주말 입장 방식 확인 · 이동 60–75분",
       "items": [
         {
           "id": "d18-0",
@@ -595,7 +595,7 @@ window.PARIS_DATA = {
           "start": "09:45",
           "end": "11:00",
           "after": false,
-          "title": "일드세갱으로 이동",
+          "title": "Île Seguin으로 이동",
           "note": "대중교통·도보 60–75분을 잡은 계획안",
           "place": "large",
           "key": false,
@@ -610,7 +610,7 @@ window.PARIS_DATA = {
           "start": "11:00",
           "end": "13:00",
           "after": false,
-          "title": "Large · 개관전",
+          "title": "Large",
           "note": "Moteur Imaginaire · 개관 주말 입장 방식·시간·요금 확인 후 예약.",
           "place": "large",
           "key": true,
@@ -626,7 +626,7 @@ window.PARIS_DATA = {
           "end": "14:00",
           "after": false,
           "title": "점심",
-          "note": "일드세갱·인근 식당",
+          "note": "Île Seguin·인근 식당",
           "place": "large",
           "key": true,
           "transit": false,
@@ -640,7 +640,7 @@ window.PARIS_DATA = {
           "start": "14:00",
           "end": "14:40",
           "after": false,
-          "title": "일드세갱 강변·건축 산책",
+          "title": "Île Seguin 강변·건축 산책",
           "note": "비가 오거나 피곤하면 생략",
           "place": "large",
           "key": true,
@@ -655,7 +655,7 @@ window.PARIS_DATA = {
           "start": "14:40",
           "end": "15:45",
           "after": false,
-          "title": "생제르맹으로 이동",
+          "title": "Saint-Germain-des-Prés으로 이동",
           "note": "대중교통·도보 여유 포함",
           "place": "babylone",
           "key": false,
@@ -671,7 +671,7 @@ window.PARIS_DATA = {
           "end": "16:00",
           "after": false,
           "title": "휴식·이동 여유",
-          "note": "생제르맹",
+          "note": "Saint-Germain-des-Prés",
           "place": "saintgermain",
           "key": false,
           "transit": true,
@@ -685,7 +685,7 @@ window.PARIS_DATA = {
           "start": "16:00",
           "end": "16:45",
           "after": false,
-          "title": "생로랑 바빌론",
+          "title": "Saint Laurent Babylone",
           "note": "아트북·레코드 구경",
           "place": "babylone",
           "key": true,
@@ -700,7 +700,7 @@ window.PARIS_DATA = {
           "start": "16:45",
           "end": "17:15",
           "after": false,
-          "title": "노트르담·NANNA 방향 이동",
+          "title": "Notre-Dame·NANNA 방향 이동",
           "note": "도보",
           "place": "nanna",
           "key": false,
@@ -716,7 +716,7 @@ window.PARIS_DATA = {
           "end": "18:15",
           "after": false,
           "title": "NANNA",
-          "note": "노트르담 앞 선상 독서공간·바. 7 Quai de Montebello 앞 계단 진입.",
+          "note": "Notre-Dame 앞 선상 독서공간·바. 7 Quai de Montebello 앞 계단 진입.",
           "place": "nanna",
           "key": true,
           "transit": false,
@@ -788,10 +788,10 @@ window.PARIS_DATA = {
       "day": 19,
       "date": "2026-10-19",
       "weekday": "월",
-      "title": "오랑주리 · 피노 컬렉션",
-      "region": "그랑 팔레 · 팔레 루아얄",
-      "important": "09:00 오랑주리 · 12:00 점심 · 14:30 피노",
-      "brief": "미술관 2곳·그랑 카페 예약 확인",
+      "title": "미술관 · Grand Palais",
+      "region": "Musée de l’Orangerie · Pinault Collection",
+      "important": "09:00 관람 · 12:00 점심 · 14:30 관람",
+      "brief": "미술관 2곳과 Le Grand Café 예약 확인",
       "items": [
         {
           "id": "d19-0",
@@ -799,7 +799,7 @@ window.PARIS_DATA = {
           "start": "08:00",
           "end": "08:45",
           "after": false,
-          "title": "아침·오랑주리 이동",
+          "title": "아침·Musée de l’Orangerie 이동",
           "note": "간단히 먹고 출발",
           "place": "orangerie",
           "key": false,
@@ -829,7 +829,7 @@ window.PARIS_DATA = {
           "start": "09:00",
           "end": "11:00",
           "after": false,
-          "title": "오랑주리 미술관",
+          "title": "Musée de l’Orangerie",
           "note": "수련 + Monet, peindre le temps. 09:00 예약 권장.",
           "place": "orangerie",
           "key": true,
@@ -844,7 +844,7 @@ window.PARIS_DATA = {
           "start": "11:00",
           "end": "11:45",
           "after": false,
-          "title": "튈르리·콩코르드 → 그랑 팔레",
+          "title": "Jardin des Tuileries·Place de la Concorde → Grand Palais",
           "note": "산책·이동",
           "place": "grand",
           "key": false,
@@ -859,7 +859,7 @@ window.PARIS_DATA = {
           "start": "12:00",
           "end": "13:15",
           "after": false,
-          "title": "르 그랑 카페 · 점심",
+          "title": "Le Grand Café",
           "note": "1인 예약 권장",
           "place": "grand",
           "key": true,
@@ -874,7 +874,7 @@ window.PARIS_DATA = {
           "start": "13:15",
           "end": "14:15",
           "after": false,
-          "title": "부르스 드 코메르스로 이동",
+          "title": "Bourse de Commerce로 이동",
           "note": "이동·휴식 여유 포함",
           "place": "pinault",
           "key": false,
@@ -890,7 +890,7 @@ window.PARIS_DATA = {
           "end": "14:30",
           "after": false,
           "title": "입장 준비",
-          "note": "부르스 드 코메르스",
+          "note": "Bourse de Commerce",
           "place": "pinault",
           "key": false,
           "transit": true,
@@ -904,7 +904,7 @@ window.PARIS_DATA = {
           "start": "14:30",
           "end": "17:00",
           "after": false,
-          "title": "피노 컬렉션",
+          "title": "Bourse de Commerce · Pinault Collection",
           "note": "Remember Me + Barbara Kruger: The History of Tears. 14:30 예약 권장.",
           "place": "pinault",
           "key": true,
@@ -919,7 +919,7 @@ window.PARIS_DATA = {
           "start": "17:00",
           "end": "17:30",
           "after": false,
-          "title": "팔레 루아얄 방향 산책",
+          "title": "Palais-Royal 방향 산책",
           "note": "도보",
           "place": "palais",
           "key": false,
@@ -934,7 +934,7 @@ window.PARIS_DATA = {
           "start": "17:30",
           "end": "18:15",
           "after": false,
-          "title": "카페 신 팔레 루아얄",
+          "title": "Café Shin Palais Royal",
           "note": "커피",
           "place": "shin",
           "key": true,
@@ -950,7 +950,7 @@ window.PARIS_DATA = {
           "end": "20:00",
           "after": false,
           "title": "저녁",
-          "note": "팔레 루아얄·몽토르게유 또는 숙소 주변",
+          "note": "Palais-Royal·Montorgueil 또는 숙소 주변",
           "place": "palais",
           "key": true,
           "transit": false,
@@ -994,10 +994,10 @@ window.PARIS_DATA = {
       "day": 20,
       "date": "2026-10-20",
       "weekday": "화",
-      "title": "체크아웃 · 암스테르담",
-      "region": "생마르탱 운하 · 파리 북역",
-      "important": "14:15 짐 수령 · 15:20 북역 도착 목표",
-      "brief": "16:18 열차 9463 출발 → 19:50 암스테르담 도착",
+      "title": "체크아웃 · Amsterdam",
+      "region": "Canal Saint-Martin · Gare du Nord",
+      "important": "16:18 Gare du Nord 출발",
+      "brief": "14:15 짐 수령 · 역 도착 목표 15:20",
       "items": [
         {
           "id": "d20-0",
@@ -1035,7 +1035,7 @@ window.PARIS_DATA = {
           "start": "11:15",
           "end": "12:15",
           "after": false,
-          "title": "생마르탱 운하 산책",
+          "title": "Canal Saint-Martin 산책",
           "note": "짧게 걷는 일정",
           "place": "canal",
           "key": true,
@@ -1050,7 +1050,7 @@ window.PARIS_DATA = {
           "start": "12:30",
           "end": "13:30",
           "after": false,
-          "title": "부이용 레퓌블리크 · 점심",
+          "title": "Bouillon République",
           "note": "대기가 길면 인근 식당으로 변경",
           "place": "bouillon",
           "key": true,
@@ -1095,8 +1095,8 @@ window.PARIS_DATA = {
           "start": "14:45",
           "end": "15:20",
           "after": false,
-          "title": "파리 북역으로 이동",
-          "note": "Réaumur–Sébastopol → 메트로 4호선 → Gare du Nord. 북역 도착 목표 15:20.",
+          "title": "Gare du Nord으로 이동",
+          "note": "Réaumur–Sébastopol → 메트로 4호선 → Gare du Nord. Gare du Nord 도착 목표 15:20.",
           "place": "nord",
           "key": true,
           "transit": true,
@@ -1111,7 +1111,7 @@ window.PARIS_DATA = {
           "end": "16:00",
           "after": false,
           "title": "승강장 확인 · 탑승 준비",
-          "note": "북역 도착 목표 15:20",
+          "note": "Gare du Nord 도착 목표 15:20",
           "place": "nord",
           "key": true,
           "transit": true,
@@ -1125,7 +1125,7 @@ window.PARIS_DATA = {
           "start": "16:18",
           "end": "",
           "after": false,
-          "title": "파리 북역 출발",
+          "title": "Gare du Nord 출발",
           "note": "열차 9463",
           "place": "nord",
           "key": true,
@@ -1140,7 +1140,7 @@ window.PARIS_DATA = {
           "start": "19:50",
           "end": "",
           "after": false,
-          "title": "암스테르담 중앙역 도착",
+          "title": "Amsterdam Centraal 도착",
           "note": "이동 시간 3시간 32분",
           "place": "ams",
           "key": true,
@@ -1179,7 +1179,7 @@ window.PARIS_DATA = {
     },
     {
       "id": "orangerie",
-      "title": "오랑주리 미술관",
+      "title": "Musée de l’Orangerie",
       "when": "10/19 09:00",
       "note": "수련 + Monet, peindre le temps · 온라인 일반권 €12.50 (첨부 기준).",
       "url": "https://www.musee-orangerie.fr/fr/visite/tarifs-orangerie",
@@ -1188,16 +1188,16 @@ window.PARIS_DATA = {
     },
     {
       "id": "grand",
-      "title": "르 그랑 카페",
+      "title": "Le Grand Café",
       "when": "10/19 12:00 · 1명",
-      "note": "그랑 팔레 · 점심 예약 권장.",
+      "note": "Grand Palais · 점심 예약 권장.",
       "url": "https://www.legrandcafe-paris.com/",
       "place": "grand",
       "type": "booking"
     },
     {
       "id": "pinault",
-      "title": "피노 컬렉션",
+      "title": "Bourse de Commerce · Pinault Collection",
       "when": "10/19 14:30",
       "note": "Remember Me + Barbara Kruger 설치 · 일반권 €15 (첨부 기준).",
       "url": "https://www.pinaultcollection.com/fr/boursedecommerce/history-tears",
@@ -1217,7 +1217,7 @@ window.PARIS_DATA = {
       "id": "bag-out",
       "title": "체크아웃 후 짐 보관",
       "when": "10/20 11:00 → 14:15 수령",
-      "note": "보관 가능 여부·수령 장소 확인. 14:45까지 짐 수령을 마치고 북역으로 출발.",
+      "note": "보관 가능 여부·수령 장소 확인. 14:45까지 짐 수령을 마치고 Gare du Nord으로 출발.",
       "url": "",
       "place": "home",
       "type": "check"
@@ -1227,20 +1227,20 @@ window.PARIS_DATA = {
     {
       "place": "mitterrand",
       "day": 20,
-      "title": "10/20 · 미테랑 갤러리 대체안",
-      "note": "일반 공개 시간 확인 후 운하·점심 구간과 교체. 11:00–11:45 이동 → 11:45–12:30 방문 → 12:30–13:15 점심 → 14:15 숙소 복귀. 짐 수령·북역 일정은 유지."
+      "title": "10/20 · Galerie Mitterrand 대체안",
+      "note": "일반 공개 시간 확인 후 운하·점심 구간과 교체. 11:00–11:45 이동 → 11:45–12:30 방문 → 12:30–13:15 점심 → 14:15 숙소 복귀. 짐 수령·Gare du Nord 일정은 유지."
     },
     {
       "place": "cartilage",
       "day": 17,
-      "title": "10/17 · 메쥐르 대체",
+      "title": "10/17 · Cartilage",
       "note": "당일 공연·DJ·입장료 확인 후 선택."
     },
     {
       "place": "pompidou",
       "day": 19,
-      "title": "첫날 메종 퐁피두를 생략했다면",
-      "note": "10/19 피노 관람 후 카페 신 대신 방문. 19:00 종료 전 관람 가능 시간 확인."
+      "title": "첫날 Maison Pompidou를 생략했다면",
+      "note": "10/19 Pinault Collection 관람 후 Café Shin 대신 방문. 19:00 종료 전 관람 가능 시간 확인."
     }
   ],
   "packing": [

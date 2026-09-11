@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='paris-plans-2e56932f9dea';
+const CACHE='paris-plans-c5039121ee2a';
 const FILES=["./", "./index.html", "./styles.css", "./data.js", "./app.js", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest", "./vendor/leaflet.js", "./vendor/leaflet.css"];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('paris-plans-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
