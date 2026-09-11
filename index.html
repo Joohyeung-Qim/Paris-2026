@@ -1,45 +1,108 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Paris 2026 프로젝트의 첫 번째 HTML 샘플 페이지">
-  <title>Paris 2026 · Hello, Paris</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23192743'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='serif' font-size='24' fill='white'%3EP%3C/text%3E%3C/svg%3E">
-  <style>
-    * { box-sizing: border-box; }
-    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #192743; background: #f4f6fa; }
-    body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; }
-    header, main, footer { width: min(100% - 3rem, 1080px); margin-inline: auto; }
-    header { padding-block: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #d4dbe7; }
-    .brand { font-weight: 750; letter-spacing: .06em; }
-    .edition { font-size: .875rem; color: #566278; }
-    main { flex: 1; display: grid; align-content: center; padding-block: 5rem; }
-    .eyebrow { font-size: .875rem; font-weight: 700; letter-spacing: .16em; color: #a32c38; margin: 0 0 1.5rem; }
-    h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(3.5rem, 11vw, 8rem); line-height: 1.05; letter-spacing: -.045em; margin: 0; }
-    h1 span { color: #a32c38; }
-    .intro { font-size: 1.125rem; line-height: 1.8; color: #566278; margin: 2rem 0; word-break: keep-all; }
-    a { display: inline-flex; width: fit-content; padding: 1rem 1.4rem; color: white; background: #192743; border-radius: .4rem; text-decoration: none; font-weight: 650; line-height: 1.5; }
-    a:hover { background: #2e4269; }
-    a:focus-visible { outline: 3px solid #a32c38; outline-offset: 5px; }
-    footer { padding-block: 1.5rem; border-top: 1px solid #d4dbe7; color: #566278; font-size: .875rem; line-height: 1.6; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-    @media (max-width: 480px) { header, main, footer { width: calc(100% - 2rem); } header { align-items: flex-start; flex-direction: column; } main { padding-block: 3.5rem; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="파리에서 보내는 4박 5일. 날짜별 일정, 여행 예산과 준비물을 한곳에서 확인하는 여행계획 샘플.">
+<title>나의 파리 여행 · Paris 2026</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath fill='%23002395' d='M0 0h10v30H0z'/%3E%3Cpath fill='white' d='M10 0h10v30H10z'/%3E%3Cpath fill='%23ed2939' d='M20 0h10v30H20z'/%3E%3C/svg%3E">
+<style>
+/* Reference: supplied Toss design MD. Palette is a French tricolor adaptation.
+   Cards, itinerary tabs, dialog and layout are project extensions, not official TDS.
+   Toss Product Sans is used only if installed; no font files are redistributed. */
+:root{--blue:#002395;--red:#ed2939;--white:#fff;--ink:#191f28;--body:#4e5968;--muted:#657084;--bg:#f5f7fa;--line:#e5e8eb;--soft:#eef2ff;--red-soft:#fff0f1;color-scheme:light;font-family:"Toss Product Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button,a,input{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}button:active:not(:disabled){transform:translateY(1px)}a{color:var(--blue)}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:4px}button{transition:background .15s}h1,h2,h3,p{margin:0}svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.wrap{max-width:1120px;margin:auto;padding-inline:28px}.topbar{background:var(--white);border-bottom:1px solid var(--line)}.topbar .wrap{height:80px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:750;letter-spacing:-.5px}.flag{display:inline-block;width:27px;height:20px;background:linear-gradient(90deg,var(--blue) 0 33.333%,var(--white) 33.333% 66.666%,var(--red) 66.666%);border:1px solid #e5e8eb;border-radius:3px}.top-label{font-size:14px;color:var(--muted)}.intro{padding-top:40px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:24px}.eyebrow{color:var(--blue);font-size:14px;font-weight:650;margin-bottom:8px}h1{font-size:36px;line-height:1.5;letter-spacing:-1.5px}.sub{color:var(--body);font-size:16px;line-height:1.6;margin-top:4px}.sample{padding:7px 11px;border-radius:8px;background:var(--white);color:var(--muted);font-size:14px;white-space:nowrap}.trip{display:grid;grid-template-columns:1.1fr 1fr;background:var(--white);border-radius:24px;overflow:hidden;margin-bottom:32px}.trip-info{padding:30px 32px;display:flex;flex-direction:column;justify-content:center}.tag{font-size:14px;color:var(--blue);font-weight:650}.trip h2{font-size:26px;letter-spacing:-.8px;margin:8px 0 22px;line-height:1.45}.facts{display:flex;gap:28px}.fact{display:grid;gap:5px}.fact span{color:var(--muted);font-size:14px}.fact strong{font-size:16px;font-weight:600}.trip-photo{position:relative;margin:0;min-height:228px;background:var(--soft)}.trip-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 48%}.photo-credit{position:absolute;bottom:10px;right:12px;background:#ffffffed;padding:4px 8px;border-radius:6px;font-size:12px;color:var(--body);text-decoration:none}.grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}.panel{background:var(--white);border-radius:24px;padding:28px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}h2{font-size:22px;line-height:1.5;letter-spacing:-.6px}.quiet{color:var(--muted);font-size:14px}.days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:28px}.day{border:0;background:var(--bg);border-radius:14px;min-height:76px;padding:10px 4px;display:grid;place-content:center;gap:5px;color:var(--body)}.day small{font-size:14px}.day strong{font-size:17px}.day:hover{background:#e6ebf9}.day[aria-pressed="true"]{background:var(--blue);color:var(--white)}.day-heading{margin-bottom:24px}.day-heading h3{font-size:20px;line-height:1.5;letter-spacing:-.5px}.day-heading p{font-size:14px;color:var(--muted);margin-top:6px}.timeline{list-style:none;padding:0;margin:0}.stop{position:relative;display:grid;grid-template-columns:48px 1fr;gap:16px;padding-bottom:28px}.stop:not(:last-child):before{content:"";position:absolute;top:48px;bottom:0;left:23px;width:2px;background:var(--line)}.icon-box{width:48px;height:48px;border-radius:16px;background:var(--soft);color:var(--blue);display:grid;place-items:center;z-index:1}.stop-time{font-size:14px;font-weight:650;color:var(--blue);margin:1px 0 5px}.stop-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:17px;font-weight:650;line-height:1.5}.stop-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-top:5px}.badge{font-size:12px;font-weight:600;background:var(--red-soft);color:#c11b2a;border-radius:6px;padding:3px 7px}.primary{min-height:56px;border:0;border-radius:16px;background:var(--blue);color:var(--white);font-size:17px;font-weight:600;padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}.primary:hover{background:#001b73}.secondary{min-height:48px;padding:12px 20px;background:var(--bg);color:var(--body);border:0;border-radius:14px;font-weight:600}.sidebar{display:grid;gap:24px}.budget-label{color:var(--muted);font-size:14px;margin-top:16px}.amount{font-size:32px;font-weight:750;letter-spacing:-1px;margin-top:6px}.amount small{font-size:16px;font-weight:500;color:var(--muted);letter-spacing:0}.budget-bar{height:10px;display:flex;overflow:hidden;border-radius:5px;margin:22px 0}.budget-bar span:nth-child(1){width:57.142%;background:var(--blue)}.budget-bar span:nth-child(2){width:28.572%;background:#a6b6e6}.budget-bar span:nth-child(3){width:14.286%;background:var(--red)}.budget-list{margin:0;display:grid;gap:14px}.budget-list div{display:flex;justify-content:space-between;gap:12px;font-size:14px}.budget-list dt{color:var(--body);display:flex;align-items:center;gap:8px}.budget-list dd{margin:0;font-weight:600}.dot{width:8px;height:8px;border-radius:3px;background:var(--blue)}.dot.pale{background:#a6b6e6}.dot.red{background:var(--red)}.budget-note{border-top:1px solid var(--line);padding-top:16px;margin-top:20px;font-size:14px;line-height:1.6;color:var(--muted)}.check-head{margin-bottom:14px}.check-count{font-size:14px;font-weight:650;color:var(--blue)}.checklist{display:grid;gap:2px}.check{display:flex;align-items:center;gap:12px;min-height:48px;font-size:16px;cursor:pointer}.check input{width:22px;height:22px;accent-color:var(--blue);margin:0;flex-shrink:0}.check:has(input:checked) span{color:var(--muted);text-decoration:line-through}.tip{background:var(--soft);border-radius:16px;padding:18px;margin-top:18px;font-size:14px;color:var(--blue);line-height:1.6}.foot{padding-block:28px 36px;display:flex;gap:12px;justify-content:space-between;font-size:12px;color:var(--muted);line-height:1.7}.foot p{max-width:660px}.flag-line{height:4px;background:linear-gradient(90deg,var(--blue) 0 33.333%,var(--white) 33.333% 66.666%,var(--red) 66.666%)}dialog{border:0;border-radius:24px;padding:28px;width:min(440px,calc(100% - 32px));color:var(--ink);max-height:90svh;overflow:auto}dialog::backdrop{background:#191f2866}dialog h2{margin-bottom:8px}dialog form{display:grid;gap:18px;margin-top:24px}.field{display:grid;gap:8px;font-size:14px;font-weight:600}.field input{border:1px solid #c9d0db;background:var(--bg);min-height:52px;border-radius:12px;padding:12px;font-size:16px;width:100%;color:var(--ink)}.actions{display:flex;gap:12px;margin-top:8px}.actions .primary{flex:1}.live{font-size:14px;color:var(--blue);line-height:1.5;margin-top:12px}.live:empty{display:none}.noscript{padding:20px;line-height:1.7}
+@media(min-width:1400px){.wrap{max-width:1180px}.grid{grid-template-columns:minmax(0,1fr) 340px}}
+@media(max-width:850px){.grid{grid-template-columns:minmax(0,1fr)}.sidebar{grid-template-columns:1fr 1fr}.trip-info{padding:24px}.facts{gap:18px}}
+@media(max-width:560px){.wrap{padding-inline:20px}.topbar .wrap{height:68px}.brand{font-size:18px}.intro{padding-top:28px;align-items:flex-start}.intro .sample{margin-top:7px}h1{font-size:30px;line-height:1.45}.sub{font-size:14px}.trip{grid-template-columns:1fr;border-radius:20px;margin-bottom:24px}.trip-info{padding:24px}.trip h2{font-size:24px;margin-bottom:18px}.trip-photo{min-height:170px}.facts{justify-content:space-between;gap:12px}.fact strong{font-size:14px}.panel{padding:24px 20px;border-radius:20px}.sidebar{grid-template-columns:1fr}.days{gap:5px}.day{min-height:72px}.day small{font-size:12px}.day strong{font-size:16px}.section-head{gap:10px}.stop{gap:12px}.foot{flex-direction:column}.top-label{font-size:12px}.amount{font-size:30px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">PARIS 2026</div>
-    <div class="edition">첫 번째 페이지 / 01</div>
-  </header>
-  <main>
-    <p class="eyebrow">BONJOUR, WORLD</p>
-    <h1>Hello,<br><span>Paris.</span></h1>
-    <p class="intro">Paris 2026 프로젝트의 시작입니다.<br>이곳에 새로운 이야기와 아이디어를 채워갑니다.</p>
-    <a href="https://github.com/Joohyeung-Qim/Paris-2026">GitHub 저장소 보기</a>
-  </main>
-  <footer>
-    <span>Paris 2026</span>
-    <span>Sample page · HTML &amp; CSS</span>
-  </footer>
+<div class="flag-line" aria-hidden="true"></div>
+<header class="topbar"><div class="wrap"><div class="brand"><span class="flag" aria-hidden="true"></span>Paris 2026</div><span class="top-label">나의 여행 노트</span></div></header>
+<main class="wrap">
+<div class="intro"><div><p class="eyebrow">BONJOUR, PARIS</p><h1>이번 가을, 파리로</h1><p class="sub">가고 싶은 곳을 모아, 나다운 여행을 준비해요.</p></div><span class="sample">샘플 여행</span></div>
+<section class="trip" aria-label="여행 개요">
+<div class="trip-info"><span class="tag">프랑스 · 파리</span><h2>천천히 걷는 파리, 4박 5일</h2><div class="facts"><div class="fact"><span>여행 기간</span><strong>2026. 10. 12 — 10. 16</strong></div><div class="fact"><span>함께하는 사람</span><strong>성인 2명</strong></div></div></div>
+<figure class="trip-photo"><img src="https://images.unsplash.com/photo-1471874708433-acd480424946?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="센강 너머로 보이는 파리의 에펠탑" width="1200" height="600" fetchpriority="high"><a class="photo-credit" href="https://unsplash.com/photos/eiffel-tower-paris-PM4VZZn-YyM" target="_blank" rel="noopener noreferrer">사진 John Towner · Unsplash</a></figure>
+</section>
+<div class="grid">
+<section class="panel" aria-labelledby="schedule-title"><div class="section-head"><h2 id="schedule-title">날짜별 일정</h2><span class="quiet">4박 5일</span></div>
+<div class="days" role="group" aria-label="여행 날짜 선택">
+<button class="day" type="button" data-day="0" aria-pressed="true"><small>1일차 · 월</small><strong>10.12</strong></button>
+<button class="day" type="button" data-day="1" aria-pressed="false"><small>2일차 · 화</small><strong>10.13</strong></button>
+<button class="day" type="button" data-day="2" aria-pressed="false"><small>3일차 · 수</small><strong>10.14</strong></button>
+<button class="day" type="button" data-day="3" aria-pressed="false"><small>4일차 · 목</small><strong>10.15</strong></button>
+<button class="day" type="button" data-day="4" aria-pressed="false"><small>5일차 · 금</small><strong>10.16</strong></button>
+</div>
+<div id="day-content" aria-live="polite" aria-atomic="true"></div>
+<noscript><p class="noscript">10월 12일: 14:00 숙소 체크인 → 16:00 센강 산책 → 18:30 저녁 식사 → 20:00 에펠탑 야경.<br>날짜 전환과 일정 추가는 JavaScript를 켜면 사용할 수 있어요.</p></noscript>
+<button class="primary" type="button" id="add-button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>이 날짜에 일정 추가</button>
+<p id="announcement" class="live" role="status"></p>
+</section>
+<aside class="sidebar">
+<section class="panel" aria-labelledby="budget-title"><h2 id="budget-title">여행 예산</h2><p class="budget-label">두 사람의 현지 예상 예산</p><p class="amount">€1,400 <small>/ 2명</small></p><div class="budget-bar" aria-hidden="true"><span></span><span></span><span></span></div><dl class="budget-list"><div><dt><i class="dot" aria-hidden="true"></i>숙박</dt><dd>€800</dd></div><div><dt><i class="dot pale" aria-hidden="true"></i>식사 · 카페</dt><dd>€400</dd></div><div><dt><i class="dot red" aria-hidden="true"></i>교통 · 관람</dt><dd>€200</dd></div></dl><p class="budget-note">항공권과 쇼핑을 제외한 예시 금액이에요.</p></section>
+<section class="panel" aria-labelledby="prepare-title"><div class="section-head check-head"><h2 id="prepare-title">떠나기 전 준비</h2><span class="check-count" id="check-count">1 / 4</span></div><div class="checklist"><label class="check"><input type="checkbox" checked><span>여권 유효기간 확인</span></label><label class="check"><input type="checkbox"><span>항공권 · 숙소 예약</span></label><label class="check"><input type="checkbox"><span>관람권 예약 확인</span></label><label class="check"><input type="checkbox"><span>로밍 · eSIM 준비</span></label></div><p class="tip">꼭 가고 싶은 곳부터 정해요.<br>비워둔 시간도 좋은 일정이 돼요.</p></section>
+</aside>
+</div>
+<footer class="foot"><p>일정과 예산은 화면 체험을 위한 샘플이에요. 실제 예약 내역이 아니며, 변경한 내용은 새로고침하면 초기화돼요.</p><span>PARIS 2026 · BON VOYAGE</span></footer>
+</main>
+<dialog id="add-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-help"><h2 id="dialog-title">새 일정 추가</h2><p class="quiet" id="dialog-help">선택한 날짜에 가고 싶은 곳을 추가해요.</p><form id="add-form"><label class="field">시간<input name="time" type="time" required value="10:00"></label><label class="field">장소 또는 할 일<input name="title" required maxlength="60" placeholder="예: 동네 베이커리에서 아침 먹기"></label><label class="field">메모 (선택)<input name="note" maxlength="100" placeholder="주소나 기억해 둘 내용을 적어주세요"></label><div class="actions"><button class="secondary" id="cancel-button" type="button">취소</button><button class="primary" type="submit">일정 추가</button></div></form></dialog>
+<script>
+"use strict";
+const plans = [
+{title:"파리와 처음 만나는 날",area:"센강 · 에펠탑",items:[
+{time:"14:00",title:"숙소에 짐 풀기",note:"체크인 후 잠깐 쉬면서 여행을 시작해요.",icon:"bed"},
+{time:"16:00",title:"센강 따라 천천히 걷기",note:"알렉상드르 3세 다리에서 강변 산책.",icon:"walk"},
+{time:"18:30",title:"동네 비스트로에서 저녁",note:"숙소 근처에서 가볍게, 오늘의 메뉴 만나기.",icon:"food"},
+{time:"20:00",title:"에펠탑 야경 보기",note:"트로카데로 광장에서 파리의 첫 밤 남기기.",icon:"star"}]},
+{title:"예술과 카페 사이",area:"오르세 · 생제르맹",items:[
+{time:"09:00",title:"크루아상으로 아침 시작",note:"동네 베이커리에서 커피와 함께.",icon:"food"},
+{time:"10:30",title:"오르세 미술관",note:"보고 싶은 작품을 골라 여유 있게 둘러봐요.",icon:"art",badge:"예약 확인"},
+{time:"14:00",title:"생제르맹 골목 산책",note:"서점과 작은 가게에 들러보기.",icon:"walk"},
+{time:"16:00",title:"카페에서 쉬어가기",note:"다음 일정 없이 느긋하게 보내는 오후.",icon:"food"}]},
+{title:"파리의 오래된 이야기",area:"루브르 · 팔레 루아얄",items:[
+{time:"09:30",title:"루브르 박물관",note:"관심 있는 전시실부터 둘러봐요.",icon:"art",badge:"예약 확인"},
+{time:"13:00",title:"팔레 루아얄 근처 점심",note:"마음에 드는 식당에서 쉬어가기.",icon:"food"},
+{time:"15:00",title:"튈르리 정원 걷기",note:"벤치에 앉아 잠시 쉬는 시간.",icon:"walk"},
+{time:"18:00",title:"센강의 저녁 풍경",note:"강변에서 노을을 기다려봐요.",icon:"star"}]},
+{title:"골목마다 새로운 발견",area:"몽마르트르 · 마레",items:[
+{time:"09:30",title:"몽마르트르 언덕 산책",note:"천천히 올라가며 파리 풍경 담기.",icon:"walk"},
+{time:"12:00",title:"작은 식당에서 점심",note:"오후 일정을 위해 여유롭게 쉬어요.",icon:"food"},
+{time:"14:30",title:"마레의 편집숍 둘러보기",note:"작은 선물과 여행의 기념품 고르기.",icon:"bag"},
+{time:"17:00",title:"보주 광장에서 쉬기",note:"바쁘게 걷지 않아도 좋은 마지막 저녁.",icon:"walk"}]},
+{title:"아쉬움은 다음 여행으로",area:"숙소 · 공항",items:[
+{time:"09:00",title:"마지막 카페 시간",note:"좋아했던 빵과 커피 한 잔 더.",icon:"food"},
+{time:"11:00",title:"숙소 체크아웃",note:"짐과 여권, 빠뜨린 물건 다시 확인하기.",icon:"bed"},
+{time:"12:00",title:"공항으로 이동",note:"실제 항공편 출발 시간에 맞춰 조정해요.",icon:"plane"}]}
+];
+const paths={bed:'<path d="M3 18v-8h18v8M3 15h18M6 10V6h12v4M3 18v2M21 18v2"/>',walk:'<path d="m8 20 3-7 4 3v5M7 11l3-4 4 1 3 4h3M11 7l2 6"/><circle cx="14" cy="4" r="2"/>',food:'<path d="M5 3v7M9 3v7M5 7h4M7 10v11M18 3v18M18 3c-4 3-4 9 0 9"/>',star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/>',art:'<path d="m3 8 9-5 9 5M4 9h16M6 10v8M12 10v8M18 10v8M3 21h18"/>',bag:'<path d="M5 8h14l1 13H4zM9 8V6a3 3 0 0 1 6 0v2"/>',plane:'<path d="m3 11 7 2 2 8 3-6 6-3-8-2-2-7-2 6z"/>',pin:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/>'};
+let selected=0;
+const content=document.querySelector("#day-content"), dialog=document.querySelector("#add-dialog"), form=document.querySelector("#add-form");
+function el(tag, cls, text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+function render(){
+ const plan=plans[selected];content.replaceChildren();
+ const heading=el("div","day-heading");heading.append(el("h3","",(selected+1)+"일차 · "+plan.title),el("p","",plan.area+" · 일정 "+plan.items.length+"개"));content.append(heading);
+ const list=el("ol","timeline");
+ plan.items.forEach(item=>{
+  const row=el("li","stop"),icon=el("span","icon-box");icon.setAttribute("aria-hidden","true");icon.innerHTML='<svg viewBox="0 0 24 24">'+paths[item.icon]+'</svg>';
+  const detail=el("div"),time=el("p","stop-time",item.time),title=el("div","stop-title");title.append(el("span","",item.title));if(item.badge)title.append(el("span","badge",item.badge));
+  detail.append(time,title);if(item.note)detail.append(el("p","stop-desc",item.note));row.append(icon,detail);list.append(row);
+ });content.append(list);
+ document.querySelectorAll(".day").forEach((b,i)=>b.setAttribute("aria-pressed",String(i===selected)));
+}
+document.querySelectorAll(".day").forEach(b=>b.addEventListener("click",()=>{selected=Number(b.dataset.day);document.querySelector("#announcement").textContent="";render();}));
+document.querySelector("#add-button").addEventListener("click",()=>{form.reset();document.querySelector("#dialog-title").textContent=(selected+1)+"일차에 일정 추가";dialog.showModal();});
+document.querySelector("#cancel-button").addEventListener("click",()=>dialog.close());
+form.elements.title.addEventListener("input",()=>form.elements.title.setCustomValidity(""));
+form.addEventListener("submit",e=>{
+ e.preventDefault();const title=form.elements.title.value.trim();if(!title){form.elements.title.setCustomValidity("장소 또는 할 일을 입력해주세요.");form.elements.title.reportValidity();return;}
+ plans[selected].items.push({time:form.elements.time.value,title,note:form.elements.note.value.trim(),icon:"pin"});plans[selected].items.sort((a,b)=>a.time.localeCompare(b.time));render();dialog.close();document.querySelector("#announcement").textContent="일정을 추가했어요. 이 페이지를 열어둔 동안 유지돼요.";
+});
+function updateChecks(){const boxes=[...document.querySelectorAll(".check input")];document.querySelector("#check-count").textContent=boxes.filter(b=>b.checked).length+" / "+boxes.length;}
+document.querySelectorAll(".check input").forEach(b=>b.addEventListener("change",updateChecks));
+render();updateChecks();
+</script>
 </body>
 </html>
