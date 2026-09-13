@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='paris-plans-437820ef0d1b';
-const FILES=["./", "./index.html", "./styles.css?v=1fb03fce16ec", "./data.js?v=835399ece20c", "./app.js?v=08178681d678", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest?v=d22242565162", "./vendor/leaflet.js", "./vendor/leaflet.css"];
+const CACHE='paris-plans-c344a6aaa3d1';
+const FILES=["./", "./index.html", "./styles.css?v=c77a2bdfd626", "./data.js?v=835399ece20c", "./app.js?v=4b5dad506f0a", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest?v=d22242565162", "./vendor/leaflet.js", "./vendor/leaflet.css", "./assets/dsm.jpg", "./assets/grand.png", "./assets/nanna.jpg", "./assets/orangerie.jpg", "./assets/partisan.jpg", "./assets/pompidou.jpg"];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES.map(file=>new Request(file,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('paris-plans-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
