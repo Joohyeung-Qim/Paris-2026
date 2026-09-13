@@ -12,25 +12,25 @@
 <link rel="icon" href="./apple-touch-icon.png" type="image/png">
 <link rel="manifest" href="./manifest.webmanifest?v=d22242565162">
 <link rel="stylesheet" href="./vendor/leaflet.css">
-<link rel="stylesheet" href="./styles.css?v=c77a2bdfd626">
+<link rel="stylesheet" href="./styles.css?v=aa340265990d">
 <script src="./vendor/leaflet.js" defer></script>
 <script src="./data.js?v=835399ece20c" defer></script>
-<script src="./app.js?v=4b5dad506f0a" defer></script>
+<script src="./app.js?v=333a9709417d" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">본문으로</a>
 <header class="appbar"><div class="bar-inner"><a href="#main" class="brand" aria-label="Paris 2026 Plans 홈"><i class="flag" aria-hidden="true"></i><span>Paris <b>2026</b></span></a><button class="search-launch" id="open-search" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><span>장소·주소 검색</span><span class="search-arrow" aria-hidden="true">↗</span></button></div></header>
 <main id="main">
-<section class="trip-head"><div><h1>Paris, 2026</h1><p class="trip-caption">10월 17–20일 · 3박 4일</p></div><div class="trip-status"><span class="countdown" id="countdown">10월 17일 출발</span><span class="paris-clock" id="paris-clock">현지시간</span></div></section>
-<div id="dates" class="collections" role="group" aria-label="날짜별 일정 컬렉션"></div>
+<section class="trip-head"><div><h1>파리 여행</h1><p class="trip-caption">10월 17–20일 · 3박 4일</p></div><div class="trip-status"><span class="countdown" id="countdown">10월 17일 출발</span><span class="paris-clock" id="paris-clock">현지시간</span></div></section>
 <div class="date-sticky"><div id="date-tabs" class="dates" role="group" aria-label="날짜 선택"></div></div>
 <div id="storage-warning" class="notice" hidden>이 브라우저에 저장할 수 없습니다. 변경 후 백업 파일을 내려받아 주세요.</div>
 <div id="offline-banner" class="notice" hidden>오프라인 · 저장된 일정만 표시합니다. 지도와 외부 링크는 인터넷 연결이 필요합니다.</div>
 <section id="view-schedule" class="view" aria-labelledby="day-title">
-<div class="day-top"><div><p class="eyebrow" id="day-number"></p><h2 id="day-title"></h2><p class="day-region" id="day-region"></p></div><button type="button" class="icon-button" id="add-item" aria-label="일정 추가"><span aria-hidden="true">＋</span></button></div>
+<div class="day-top"><div><p class="eyebrow" id="day-number"></p><h2 id="day-title"></h2><p class="day-region" id="day-region"></p></div><button type="button" class="small-button" id="add-item" aria-label="일정 추가"><span aria-hidden="true">＋</span><span>일정 추가</span></button></div>
 <div id="day-important" class="important"></div>
-<div class="day-tools"><div class="segmented" role="group" aria-label="일정 표시 범위"><button type="button" data-filter="key" aria-pressed="true">핵심</button><button type="button" data-filter="all" aria-pressed="false">전체</button></div><button type="button" class="text-button" id="route-shortcut">지도 보기 <span aria-hidden="true">↗</span></button></div>
+<div class="day-tools"><div class="segmented" role="group" aria-label="일정 표시 범위"><button type="button" data-filter="all" aria-pressed="true">전체</button><button type="button" data-filter="remaining" aria-pressed="false">남은 일정</button><button type="button" data-filter="key" aria-pressed="false">핵심</button></div><button type="button" class="text-button" id="route-shortcut">지도 보기 <span aria-hidden="true">↗</span></button></div>
 <div class="progress-row"><span id="day-progress"></span><span class="muted">현지시간 기준</span></div>
+<progress id="completion-progress" class="completion-progress" value="0" max="1" aria-label="선택한 날짜의 일정 완료율"></progress>
 <ol id="timeline" class="timeline"></ol>
 <div id="empty-state" class="panel" hidden>표시할 일정이 없습니다. 전체 보기를 선택하거나 일정을 추가하세요.</div>
 <button type="button" class="wide secondary" id="calendar-day">캘린더에 저장</button>
@@ -60,7 +60,6 @@
 <section class="panel"><h3>준비 목록</h3><div id="packing-list"></div></section>
 <section class="panel"><div class="section-row"><h3>지출 기록</h3><strong id="expense-total">€0.00</strong></div><form id="expense-form" class="expense-form"><label><span class="sr-only">지출 내용</span><input name="label" placeholder="내용" maxlength="60" required></label><label><span class="sr-only">유로 금액</span><input name="amount" type="number" inputmode="decimal" min="0.01" max="99999" step="0.01" placeholder="€" required></label><button type="submit" class="primary">추가</button></form><div id="expenses"></div></section>
 <section class="panel"><h3>일정·데이터</h3><div class="data-actions"><button class="secondary" type="button" id="calendar-all">전체 캘린더 저장</button><button class="secondary" type="button" id="backup-export">백업 다운로드</button><button class="secondary" type="button" id="backup-import">백업 불러오기</button><button class="secondary" type="button" id="print-plan">일정 인쇄</button></div><input type="file" id="import-file" accept="application/json,.json" hidden><p class="small muted">완료·메모·예약·수정 내용은 이 기기에 저장됩니다. 다른 기기로 옮길 때 백업을 사용하세요.</p><p class="small muted" id="offline-status">오프라인 저장은 웹사이트 주소에서 지원됩니다.</p></section>
-<details class="panel"><summary>이미지 출처</summary><div class="details-body image-credits"><p>각 장소의 공식 웹사이트에 공개된 이미지입니다.</p><a href="https://www.parispartisancafe.com/" target="_blank" rel="noopener noreferrer">Partisan Café Artisanal의 커피 로스팅 이미지 ↗</a><a href="https://www.doverstreetmarketparis.com/pages/locations" target="_blank" rel="noopener noreferrer">Dover Street Market Paris의 안뜰 ↗</a><a href="https://www.centrepompidou.fr/en/lieu/maison-pompidou" target="_blank" rel="noopener noreferrer">Maison Pompidou 내부 ↗</a><a href="https://nanna-paris.fr/" target="_blank" rel="noopener noreferrer">NANNA의 공식 선상 공간 이미지 ↗</a><a href="https://www.musee-orangerie.fr/fr/visite/acces-horaires-tarifs" target="_blank" rel="noopener noreferrer">Claude Monet, Reflets verts ↗</a><a href="https://www.legrandcafe-paris.com/" target="_blank" rel="noopener noreferrer">Le Grand Café의 공식 일러스트 ↗</a></div></details>
 <details class="panel"><summary>정보 기준·사용 방법</summary><div class="details-body"><p>일정·요금은 첨부 계획 기준(2026.09.12). 관광 시간은 계획이며 실제 예약·잔여석을 뜻하지 않습니다.</p><p>Large 개관·입장 방식, 전시와 영업시간은 방문 전에 공식 페이지에서 확인하세요. 숙소 짐 보관은 사전 협의가 필요합니다.</p><p>Musée de l’Orangerie·Pinault Collection 정기 무료일은 체류일과 겹치지 않습니다. Maison Pompidou는 퐁피두 본관과 다른 공간입니다.</p><p>Safari 공유 → 홈 화면에 추가. 이름은 Paris 2026 Plans, 아이콘은 프랑스 국기입니다.</p><p>오프라인에서는 마지막으로 저장된 일정과 메모를 볼 수 있습니다. 지도 바탕·공식 사이트·Google 지도는 연결이 필요합니다.</p><a href="./vendor/LEAFLET-LICENSE.txt">지도 라이브러리 라이선스</a></div></details>
 </section>
 <footer class="page-footer">모든 시간은 현지시간 · 변경 사항은 이 기기에 저장</footer>

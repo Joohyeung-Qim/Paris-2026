@@ -27,8 +27,7 @@
  }
  let state=fresh(),storageOK=true;
  try{const raw=localStorage.getItem(KEY);if(raw)state=validate(JSON.parse(raw));}catch(e){storageOK=false;$('#storage-warning').hidden=false;}
- let selected=17,view='schedule',filter='key',map=null,mapLayers=null,tileLayer=null,geoLayer=null,toastTimer=null,undoAction=null,editing=null,pendingImport=null;
- const PHOTOS={"partisan":{"src":"./assets/partisan.jpg","source":"https://www.parispartisancafe.com/","image":"https://www.parispartisancafe.com/cdn/shop/files/674A5658_900x.jpg?v=1712221453","bytes":130431,"alt":"Partisan Café Artisanal의 커피 로스팅 이미지"},"dsm":{"src":"./assets/dsm.jpg","source":"https://www.doverstreetmarketparis.com/pages/locations","image":"https://www.doverstreetmarketparis.com/cdn/shop/files/3537-pm2_4dc2a4fc-e426-4010-994c-2a7a921bec32.jpg?v=1712824912&width=720","bytes":80697,"alt":"Dover Street Market Paris의 안뜰"},"pompidou":{"src":"./assets/pompidou.jpg","source":"https://www.centrepompidou.fr/en/lieu/maison-pompidou","image":"https://www.centrepompidou.fr/fileadmin/_processed_/8/e/csm_maison-pompidou-paris_pierre-malherbet_2026_paysage_725e894f9a.jpg","bytes":39089,"alt":"Maison Pompidou 내부"},"nanna":{"src":"./assets/nanna.jpg","source":"https://nanna-paris.fr/","image":"https://nanna-paris.fr/wp-content/uploads/2026/09/Design-sans-titre-3.jpg","bytes":1518204,"alt":"NANNA의 공식 선상 공간 이미지"},"orangerie":{"src":"./assets/orangerie.jpg","source":"https://www.musee-orangerie.fr/fr/visite/acces-horaires-tarifs","image":"https://cdn.mediatheque.epmoo.fr/link/3c9igq/opr1c3jddqo717k.jpg","bytes":145542,"alt":"Claude Monet, Reflets verts"},"grand":{"src":"./assets/grand.png","source":"https://www.legrandcafe-paris.com/","image":"https://www.legrandcafe-paris.com/assets/img/cover.png","bytes":134180,"alt":"Le Grand Café의 공식 일러스트"}};
+ let selected=17,view='schedule',filter='all',map=null,mapLayers=null,tileLayer=null,geoLayer=null,toastTimer=null,undoAction=null,editing=null,pendingImport=null;
  const routeAnchors=new Set(['d17-0','d17-3','d17-4','d17-6','d17-8','d17-10','d17-12','d17-14','d17-15','d18-2','d18-7','d18-9','d18-12','d19-2','d19-4','d19-7','d19-9','d19-11','d20-1','d20-2','d20-3','d20-5','d20-7','d20-9']);
  const day=n=>D.days.find(d=>d.day===Number(n));
  const baseEvents=D.days.flatMap(d=>d.items);
@@ -47,28 +46,26 @@
   return p||{name:e.title,address:e.address||'',query:e.address||e.title+' Paris',latlng:null,url:''};
  }
  function events(n){return [...baseEvents.map(e=>({...e,...state.overrides[e.id]})),...state.custom.map(e=>({...e,custom:true,place:'',transit:false,fixed:false,optional:false,booking:''}))].filter(e=>e.day===Number(n)&&!state.deleted.includes(e.id)).sort((a,b)=>a.start.localeCompare(b.start)||baseEvents.findIndex(e=>e.id===a.id)-baseEvents.findIndex(e=>e.id===b.id));}
- function eventById(id){return [17,18,19,20].flatMap(events).find(e=>e.id===id);}
  function checkCurrent(e){const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));const hm=v.hour+':'+v.minute;return v.year==='2026'&&v.month==='10'&&Number(v.day)===e.day&&hm>=e.start&&!!e.end&&hm<e.end;}
- function scrollToDates(){const rail=$('#dates');window.scrollTo({top:rail.getBoundingClientRect().bottom+window.scrollY,behavior:'instant'});}
+ function scrollToDates(){const rail=$('.trip-head');window.scrollTo({top:rail.getBoundingClientRect().bottom+window.scrollY,behavior:'instant'});}
  function selectDay(n){selected=n;renderDates();renderSchedule();if(view==='map')renderMap();scrollToDates();}
- function photo(k,cls=''){const img=el('img',cls);img.src=PHOTOS[k].src;img.alt=PHOTOS[k].alt;img.loading='lazy';img.decoding='async';img.width=720;img.height=540;return img;}
  function renderDates(){
-  const host=$('#dates'),tabs=$('#date-tabs'),railScroll=host.scrollLeft;host.replaceChildren();tabs.replaceChildren();
-  const covers={17:['partisan','dsm','pompidou'],18:['nanna'],19:['orangerie','grand'],20:[]};
+  const tabs=$('#date-tabs');tabs.replaceChildren();
   D.days.forEach(d=>{
-   const b=button('','collection',()=>selectDay(d.day));b.setAttribute('aria-pressed',String(d.day===selected));b.setAttribute('aria-label',`10월 ${d.day}일 ${d.weekday}요일 · ${d.title}`);
-   const cover=el('span','collection-cover cover-'+d.day);
-   covers[d.day].forEach(k=>cover.append(photo(k)));
-   if(!covers[d.day].length){cover.append(el('span','departure-city','Paris → Amsterdam'),el('strong','departure-time',eventById('d20-8')?.start||'10.20'),el('span','departure-station','Gare du Nord · 9463'));}
-   cover.append(el('span','collection-date',`10.${d.day}`));b.append(cover,el('strong','collection-title',d.title),el('span','collection-meta',`${d.weekday}요일 · 일정 ${events(d.day).length}개`));host.append(b);
-   const t=button(`10.${d.day} ${d.weekday}`,'date',()=>selectDay(d.day));t.setAttribute('aria-pressed',String(d.day===selected));t.setAttribute('aria-label',`10월 ${d.day}일 ${d.weekday}요일`);tabs.append(t);
-  });host.scrollLeft=railScroll;
+   const t=button('','date',()=>selectDay(d.day));
+   t.append(el('strong','',`10.${d.day}`),el('span','',`${d.weekday}요일`));
+   t.setAttribute('aria-pressed',String(d.day===selected));t.setAttribute('aria-label',`10월 ${d.day}일 ${d.weekday}요일`);tabs.append(t);
+  });
  }
- function updateProgress(){const all=events(selected),done=all.filter(e=>state.completed[e.id]).length;const meta=$$('#dates .collection-meta')[D.days.findIndex(d=>d.day===selected)];if(meta)meta.textContent=`${day(selected).weekday}요일 · 일정 ${all.length}개`;$('#day-progress').textContent=`완료 ${done}/${all.length} · ${filter==='key'?'핵심 '+all.filter(e=>e.key).length+'개':'전체 '+all.length+'개'}`;}
+ function updateProgress(){
+  const all=events(selected),done=all.filter(e=>state.completed[e.id]).length;
+  $('#day-progress').textContent=`완료 ${done} / ${all.length} · 남은 일정 ${all.length-done}개`;
+  $('#completion-progress').max=all.length||1;$('#completion-progress').value=done;
+ }
  function renderSchedule(){
   const d=day(selected);$('#day-number').textContent=`10월 ${selected}일 · ${d.weekday}요일`;$('#day-title').textContent=d.title;$('#day-region').textContent=d.region;
   const imp=$('#day-important');imp.replaceChildren(el('strong','',d.important),el('span','',d.brief));imp.classList.toggle('urgent',selected===20);
-  const all=events(selected),visible=filter==='key'?all.filter(e=>e.key):all;updateProgress();$('#empty-state').hidden=visible.length>0;
+  const all=events(selected),visible=filter==='key'?all.filter(e=>e.key):filter==='remaining'?all.filter(e=>!state.completed[e.id]):all;updateProgress();$('#empty-state').hidden=visible.length>0;$('#empty-state').textContent=filter==='remaining'&&all.length?'이날의 일정을 모두 완료했습니다.':'표시할 일정이 없습니다. 전체 보기를 선택하거나 일정을 추가하세요.';
   const list=$('#timeline');list.replaceChildren();visible.forEach(e=>list.append(eventCard(e)));
   $$('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)));
  }
@@ -76,7 +73,7 @@
   const li=el('li','event'+(e.transit?' transit':'')+(state.completed[e.id]?' completed':'')+(checkCurrent(e)?' current':''));li.id='event-'+e.id;
   const rail=el('div','event-rail'),time=el('time','event-time',e.start);time.dateTime=`2026-10-${e.day}T${e.start}:00+02:00`;rail.append(time);
   if(e.end)rail.append(el('span','event-end',e.end));else if(e.after)rail.append(el('span','event-end','이후'));
-  const label=el('label','complete-control'),check=document.createElement('input');check.type='checkbox';check.checked=!!state.completed[e.id];check.setAttribute('aria-label',e.title+' 완료');check.addEventListener('change',()=>{state.completed[e.id]=check.checked;save();li.classList.toggle('completed',check.checked);updateProgress();});label.append(check);rail.append(label);
+  const label=el('label','complete-control'),check=document.createElement('input');check.type='checkbox';check.checked=!!state.completed[e.id];check.setAttribute('aria-label',e.title+' 완료');check.addEventListener('change',()=>{state.completed[e.id]=check.checked;save();li.classList.toggle('completed',check.checked);updateProgress();if(filter==='remaining'){renderSchedule();toast('완료했습니다.',()=>{state.completed[e.id]=false;});}});label.append(check);rail.append(label);
   const content=el('div','event-content'),p=eventPlace(e),badges=el('div','event-badges');
   if(e.optional)badges.append(el('span','badge gray','선택'));
   if(e.booking)badges.append(el('span',state.bookings[e.booking]==='done'?'badge':'badge red',state.bookings[e.booking]==='done'?'확인 완료':'예약·확인 필요'));
@@ -88,19 +85,11 @@
   const categories={partisan:'카페',dsm:'편집숍',pompidou:'전시 · 무료',mesures:'음악 바',large:'미술관 · Moteur Imaginaire',babylone:'아트북 · 레코드',nanna:'선상 독서공간 · 바',orangerie:'미술관 · Monet, peindre le temps',grand:'점심',pinault:'미술관 · Remember Me',shin:'카페',bouillon:'점심'};
   if(categories[e.place]&&e.title===p.name)content.append(el('p','event-caption',categories[e.place]));
   const links=el('div','event-links');links.append(link('Google 지도 ↗',google(p.query),''),link('길찾기 ↗',directions('',p.query),''));content.append(links);
-  const details=document.createElement('details'),summary=el('summary','',state.notes[e.id]?'메모 있음':'상세');details.append(summary);
+  const details=document.createElement('details'),summary=el('summary','',state.notes[e.id]?'메모 있음':'상세·수정');details.append(summary);
   const detailBody=el('div','event-detail-body');if(p.address)detailBody.append(el('p','event-address',p.address));if(e.note)detailBody.append(el('p','event-note',e.note));if(e.fixed)detailBody.append(el('p','small muted','전달받은 예약 정보 기준'));
   if(p.url)detailBody.append(link(e.booking?'예약·안내 ↗':'장소 안내 ↗',p.url,'detail-link'));
-  const note=document.createElement('textarea');note.rows=2;note.maxLength=4000;note.placeholder='메모를 남겨두세요';note.value=state.notes[e.id]||'';note.setAttribute('aria-label',e.title+' 개인 메모');note.addEventListener('input',()=>{state.notes[e.id]=note.value;save();summary.textContent=note.value?'메모 있음':'상세';});detailBody.append(note);
-  const actions=el('div','edit-actions');actions.append(button('수정','',()=>openEditor(e)),button('일정에서 제외','danger',()=>{state.deleted.push(e.id);save();renderSchedule();toast('일정에서 제외했습니다.',()=>{state.deleted=state.deleted.filter(id=>id!==e.id);});}));if(state.overrides[e.id])actions.prepend(button('원안 복원','',()=>{const old=state.overrides[e.id];delete state.overrides[e.id];save();renderSchedule();toast('원안으로 복원했습니다.',()=>state.overrides[e.id]=old);}));detailBody.append(actions);details.append(detailBody);content.append(details);const media=el('div','event-visual');
-  if(PHOTOS[e.place]&&e.title===p.name){media.append(photo(e.place));li.classList.add('has-photo');}
-  else{
-   media.classList.add('type-visual');
-   const code=e.place==='home'?'60':e.place==='cdg'?'CDG':e.place==='nord'?e.start:e.place==='ams'?'AMS':e.place==='large'?'Large':e.place==='pinault'?'Remember\nMe':e.place==='canal'?'Canal\nSaint-Martin':e.place==='mesures'?'Mesures':e.place==='babylone'?'Saint Laurent\nBabylone':e.place==='shin'?'Café Shin':e.place==='bouillon'?'Bouillon\nRépublique':e.start;
-   media.append(el('span','visual-label',e.place==='home'?'Rue du Vertbois':e.place==='cdg'?'Paris · Terminal 1':e.place==='nord'?'Gare du Nord':e.place==='pinault'?'Pinault Collection':e.place==='large'?'Moteur Imaginaire':e.transit?'이동':'10월 '+e.day+'일'),el('strong','visual-type',code));
-   media.classList.add('visual-'+(e.place||'custom'));
-  }
-  li.append(media,rail,content);details.addEventListener('toggle',()=>li.classList.toggle('expanded',details.open));return li;
+  const note=document.createElement('textarea');note.rows=2;note.maxLength=4000;note.placeholder='메모를 남겨두세요';note.value=state.notes[e.id]||'';note.setAttribute('aria-label',e.title+' 개인 메모');note.addEventListener('input',()=>{state.notes[e.id]=note.value;save();summary.textContent=note.value?'메모 있음':'상세·수정';});detailBody.append(note);
+  const actions=el('div','edit-actions');actions.append(button('수정','',()=>openEditor(e)),button('일정에서 제외','danger',()=>{state.deleted.push(e.id);save();renderSchedule();toast('일정에서 제외했습니다.',()=>{state.deleted=state.deleted.filter(id=>id!==e.id);});}));if(state.overrides[e.id])actions.prepend(button('원안 복원','',()=>{const old=state.overrides[e.id];delete state.overrides[e.id];save();renderSchedule();toast('원안으로 복원했습니다.',()=>state.overrides[e.id]=old);}));detailBody.append(actions);details.append(detailBody);content.append(details);li.append(rail,content);return li;
  }
  function setView(next){view=next;$$('.view').forEach(v=>v.hidden=v.id!=='view-'+view);$$('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});if(view==='map')renderMap();if(view==='bookings')renderBookings();if(view==='more')renderMore();scrollToDates();}
  $$('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
