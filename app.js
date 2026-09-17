@@ -82,7 +82,7 @@
   if(badges.childNodes.length)content.append(badges);
   content.append(el('h3','event-title',e.title));
   // Keep the main list short. Full addresses, itinerary notes and editing live in details.
-  const categories={partisan:'카페',dsm:'편집숍',pompidou:'전시 · 무료',mesures:'음악 바',large:'미술관 · Moteur Imaginaire',babylone:'아트북 · 레코드',nanna:'선상 독서공간 · 바',orangerie:'미술관 · Monet, peindre le temps',grand:'점심',pinault:'미술관 · Remember Me',shin:'카페',bouillon:'점심'};
+  const categories={partisan:'카페',pompidou:'전시 · 무료',mesures:'음악 바',large:'미술관 · Moteur Imaginaire',flv:'미술관 · Mohammad Alfaraj',babylone:'아트북 · 레코드',nanna:'선상 독서공간 · 바',orangerie:'미술관 · Monet, peindre le temps',grand:'점심',pinault:'미술관 · 10월 신전시 · Irving Penn / Depardon',shin:'카페',bouillon:'점심'};
   if(categories[e.place]&&e.title===p.name)content.append(el('p','event-caption',categories[e.place]));
   const links=el('div','event-links');links.append(link('Google 지도 ↗',google(p.query),''),link('길찾기 ↗',directions('',p.query),''));content.append(links);
   const details=document.createElement('details'),summary=el('summary','',state.notes[e.id]?'메모 있음':'상세·수정');details.append(summary);

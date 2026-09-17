@@ -40,19 +40,6 @@ window.PARIS_DATA = {
       "url": "https://www.parispartisancafe.com/",
       "detail": ""
     },
-    "dsm": {
-      "id": "dsm",
-      "name": "Dover Street Market Paris",
-      "address": "35–37 Rue des Francs-Bourgeois, Paris",
-      "query": "Dover Street Market Paris 35 Rue des Francs Bourgeois",
-      "latlng": [
-        48.857787,
-        2.360391
-      ],
-      "source": "https://data.geopf.fr/geocodage/search?q=35+Rue+des+Francs+Bourgeois+75004+Paris&limit=1",
-      "url": "https://www.doverstreetmarketparis.com/pages/locations",
-      "detail": ""
-    },
     "pompidou": {
       "id": "pompidou",
       "name": "Maison Pompidou",
@@ -91,6 +78,19 @@ window.PARIS_DATA = {
       "source": "https://nominatim.openstreetmap.org/search?q=%C3%8Ele+Seguin+Boulogne-Billancourt+France&format=json&limit=1",
       "url": "https://www.large-emerige.fr/",
       "detail": "10/17–18 개관 주말 · 입장 방식 확인 필요. 지도는 섬 기준."
+    },
+    "flv": {
+      "id": "flv",
+      "name": "Fondation Louis Vuitton",
+      "address": "8 Avenue du Mahatma Gandhi, 75116 Paris",
+      "query": "Fondation Louis Vuitton 8 Avenue du Mahatma Gandhi Paris",
+      "latlng": [
+        48.8746947,
+        2.2632676
+      ],
+      "source": "https://nominatim.openstreetmap.org/search?q=Fondation+Louis+Vuitton+Paris&format=json&limit=1",
+      "url": "https://www.fondationlouisvuitton.fr/",
+      "detail": "Mohammad Alfaraj 개인전 · 사전 예약 권장. Île Seguin에서 이동 시간 확인 필요."
     },
     "babylone": {
       "id": "babylone",
@@ -154,7 +154,7 @@ window.PARIS_DATA = {
         2.3424
       ],
       "source": "https://data.geopf.fr/geocodage/search?q=2+Rue+de+Viarmes+75001+Paris&limit=1",
-      "url": "https://www.pinaultcollection.com/en/boursedecommerce/remember-me",
+      "url": "https://www.pinaultcollection.com/fr/boursedecommerce",
       "detail": ""
     },
     "shin": {
@@ -298,7 +298,7 @@ window.PARIS_DATA = {
       "date": "2026-10-17",
       "weekday": "토",
       "title": "도착 · Le Marais",
-      "region": "Partisan · Dover Street Market · Maison Pompidou",
+      "region": "Partisan · Le Marais · Maison Pompidou",
       "important": "07:20 CDG 도착 · 13:00 체크인",
       "brief": "짐 보관은 숙소에 미리 확인",
       "items": [
@@ -411,40 +411,10 @@ window.PARIS_DATA = {
           "id": "d17-7",
           "day": 17,
           "start": "14:15",
-          "end": "14:40",
+          "end": "15:45",
           "after": false,
-          "title": "Le Marais로 이동",
+          "title": "Le Marais 골목 산책 · Maison Pompidou로 이동",
           "note": "도보 여유 포함",
-          "place": "dsm",
-          "key": false,
-          "transit": true,
-          "fixed": false,
-          "optional": false,
-          "booking": ""
-        },
-        {
-          "id": "d17-8",
-          "day": 17,
-          "start": "14:40",
-          "end": "16:00",
-          "after": false,
-          "title": "Dover Street Market Paris",
-          "note": "편집숍·공간 구경",
-          "place": "dsm",
-          "key": true,
-          "transit": false,
-          "fixed": false,
-          "optional": false,
-          "booking": ""
-        },
-        {
-          "id": "d17-9",
-          "day": 17,
-          "start": "16:00",
-          "end": "16:15",
-          "after": false,
-          "title": "Maison Pompidou로 이동",
-          "note": "도보",
           "place": "pompidou",
           "key": false,
           "transit": true,
@@ -455,7 +425,7 @@ window.PARIS_DATA = {
         {
           "id": "d17-10",
           "day": 17,
-          "start": "16:15",
+          "start": "15:45",
           "end": "17:00",
           "after": false,
           "title": "Maison Pompidou",
@@ -548,7 +518,6 @@ window.PARIS_DATA = {
         "home",
         "partisan",
         "home",
-        "dsm",
         "pompidou",
         "home",
         "mesures",
@@ -556,7 +525,6 @@ window.PARIS_DATA = {
       ],
       "modes": [
         "transit",
-        "walking",
         "walking",
         "walking",
         "walking",
@@ -570,9 +538,9 @@ window.PARIS_DATA = {
       "date": "2026-10-18",
       "weekday": "일",
       "title": "Large · Saint-Germain",
-      "region": "Île Seguin · Saint Laurent Babylone · NANNA",
+      "region": "Île Seguin · Fondation Louis Vuitton · Saint-Germain",
       "important": "11:00 Large 입장 예정",
-      "brief": "개관 주말 입장 방식 확인 · 이동 60–75분",
+      "brief": "개관 주말 입장 방식 확인 · 이동 시간이 빠듯한 날",
       "items": [
         {
           "id": "d18-0",
@@ -638,22 +606,37 @@ window.PARIS_DATA = {
           "id": "d18-4",
           "day": 18,
           "start": "14:00",
-          "end": "14:40",
+          "end": "14:35",
           "after": false,
-          "title": "Île Seguin 강변·건축 산책",
-          "note": "비가 오거나 피곤하면 생략",
-          "place": "large",
-          "key": true,
-          "transit": false,
+          "title": "Fondation Louis Vuitton으로 이동",
+          "note": "Île Seguin에서 대중교통·택시 이동. 경로·소요시간 재확인 필요.",
+          "place": "flv",
+          "key": false,
+          "transit": true,
           "fixed": false,
-          "optional": true,
+          "optional": false,
           "booking": ""
         },
         {
           "id": "d18-5",
           "day": 18,
-          "start": "14:40",
-          "end": "15:45",
+          "start": "14:35",
+          "end": "16:00",
+          "after": false,
+          "title": "Fondation Louis Vuitton",
+          "note": "Mohammad Alfaraj 개인전. 사전 예약 권장.",
+          "place": "flv",
+          "key": true,
+          "transit": false,
+          "fixed": false,
+          "optional": false,
+          "booking": "flv"
+        },
+        {
+          "id": "d18-6",
+          "day": 18,
+          "start": "16:00",
+          "end": "16:50",
           "after": false,
           "title": "Saint-Germain-des-Prés으로 이동",
           "note": "대중교통·도보 여유 포함",
@@ -665,10 +648,10 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-6",
+          "id": "d18-7",
           "day": 18,
-          "start": "15:45",
-          "end": "16:00",
+          "start": "16:50",
+          "end": "17:00",
           "after": false,
           "title": "휴식·이동 여유",
           "note": "Saint-Germain-des-Prés",
@@ -680,10 +663,10 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-7",
+          "id": "d18-8",
           "day": 18,
-          "start": "16:00",
-          "end": "16:45",
+          "start": "17:00",
+          "end": "17:30",
           "after": false,
           "title": "Saint Laurent Babylone",
           "note": "아트북·레코드 구경",
@@ -695,10 +678,10 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-8",
+          "id": "d18-9",
           "day": 18,
-          "start": "16:45",
-          "end": "17:15",
+          "start": "17:30",
+          "end": "17:50",
           "after": false,
           "title": "Notre-Dame·NANNA 방향 이동",
           "note": "도보",
@@ -710,10 +693,10 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-9",
+          "id": "d18-10",
           "day": 18,
-          "start": "17:15",
-          "end": "18:15",
+          "start": "17:50",
+          "end": "18:30",
           "after": false,
           "title": "NANNA",
           "note": "Notre-Dame 앞 선상 독서공간·바. 7 Quai de Montebello 앞 계단 진입.",
@@ -725,9 +708,9 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-10",
+          "id": "d18-11",
           "day": 18,
-          "start": "18:15",
+          "start": "18:30",
           "end": "19:00",
           "after": false,
           "title": "숙소 주변으로 복귀",
@@ -740,7 +723,7 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-11",
+          "id": "d18-12",
           "day": 18,
           "start": "19:00",
           "end": "20:00",
@@ -755,7 +738,7 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d18-12",
+          "id": "d18-13",
           "day": 18,
           "start": "20:00",
           "end": "",
@@ -773,11 +756,13 @@ window.PARIS_DATA = {
       "route": [
         "home",
         "large",
+        "flv",
         "babylone",
         "nanna",
         "home"
       ],
       "modes": [
+        "transit",
         "transit",
         "transit",
         "walking",
@@ -905,7 +890,7 @@ window.PARIS_DATA = {
           "end": "17:00",
           "after": false,
           "title": "Bourse de Commerce · Pinault Collection",
-          "note": "Remember Me + Barbara Kruger: The History of Tears. 14:30 예약 권장.",
+          "note": "10월 신규 전시 + Irving Penn · Depardon. 14:30 예약 권장.",
           "place": "pinault",
           "key": true,
           "transit": false,
@@ -1178,6 +1163,15 @@ window.PARIS_DATA = {
       "type": "booking"
     },
     {
+      "id": "flv",
+      "title": "Fondation Louis Vuitton",
+      "when": "10/18 14:35",
+      "note": "Mohammad Alfaraj 개인전 · 요금·예약 방식 미확인, 방문 전 확인 필요.",
+      "url": "https://www.fondationlouisvuitton.fr/",
+      "place": "flv",
+      "type": "booking"
+    },
+    {
       "id": "orangerie",
       "title": "Musée de l’Orangerie",
       "when": "10/19 09:00",
@@ -1199,8 +1193,8 @@ window.PARIS_DATA = {
       "id": "pinault",
       "title": "Bourse de Commerce · Pinault Collection",
       "when": "10/19 14:30",
-      "note": "Remember Me + Barbara Kruger 설치 · 일반권 €15 (첨부 기준).",
-      "url": "https://www.pinaultcollection.com/fr/boursedecommerce/history-tears",
+      "note": "10월 신규 전시 + Irving Penn · Depardon · 일반권 €15 (첨부 기준, 전시 교체로 변동 가능).",
+      "url": "https://www.pinaultcollection.com/fr/boursedecommerce",
       "place": "pinault",
       "type": "booking"
     },
@@ -1255,7 +1249,7 @@ window.PARIS_DATA = {
     "airport": "https://www.parisaeroport.fr/en/passengers/transport-parking/public-transport-paris/rer-b/cdg",
     "metro4": "https://www.bonjour-ratp.fr/lignes-metro/ligne-4/",
     "partisan": "https://www.parispartisancafe.com/",
-    "dsm": "https://www.doverstreetmarketparis.com/pages/locations",
+    "flv": "https://www.fondationlouisvuitton.fr/",
     "mesures": "https://www.timeout.fr/paris/bars/mesures",
     "pompidou": "https://www.centrepompidou.fr/en/lieu/maison-pompidou",
     "paris-openings": "https://parisjetaime.com/article/nouveaux-lieux-paris-a1056",
