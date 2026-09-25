@@ -72,8 +72,8 @@
  function eventCard(e){
   const li=el('li','event'+(e.transit?' transit':'')+(state.completed[e.id]?' completed':'')+(checkCurrent(e)?' current':''));li.id='event-'+e.id;
   const rail=el('div','event-rail'),time=el('time','event-time',e.start);time.dateTime=`2026-10-${e.day}T${e.start}:00+02:00`;rail.append(time);
-  if(e.end)rail.append(el('span','event-end',e.end));else if(e.after)rail.append(el('span','event-end','이후'));
-  const label=el('label','complete-control'),check=document.createElement('input');check.type='checkbox';check.checked=!!state.completed[e.id];check.setAttribute('aria-label',e.title+' 완료');check.addEventListener('change',()=>{state.completed[e.id]=check.checked;save();li.classList.toggle('completed',check.checked);updateProgress();if(filter==='remaining'){renderSchedule();toast('완료했습니다.',()=>{state.completed[e.id]=false;});}});label.append(check);rail.append(label);
+  if(e.end)rail.append(el('span','event-end',e.end));else if(e.after)rail.append(el('span','event-end event-after','이후'));
+  const label=el('label','complete-control'),check=document.createElement('input');check.type='checkbox';check.checked=!!state.completed[e.id];check.setAttribute('aria-label',e.title+' 완료');check.addEventListener('change',()=>{state.completed[e.id]=check.checked;save();li.classList.toggle('completed',check.checked);updateProgress();if(filter==='remaining'){renderSchedule();toast('완료했습니다.',()=>{state.completed[e.id]=false;});}});label.append(check,el('span','','완료'));rail.append(label);
   const content=el('div','event-content'),p=eventPlace(e),badges=el('div','event-badges');
   if(e.optional)badges.append(el('span','badge gray','선택'));
   if(e.booking)badges.append(el('span',state.bookings[e.booking]==='done'?'badge':'badge red',state.bookings[e.booking]==='done'?'확인 완료':'예약·확인 필요'));

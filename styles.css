@@ -338,33 +338,62 @@ main{padding:0 20px 100px}
 .day-top h2{font-size:21px}.event{grid-template-columns:43px 1fr;gap:10px}.event .event-links{gap:8px}.event .event-links a{font-size:11px}.event details>summary{font-size:10px}.segmented button{padding-inline:8px}.progress-row{font-size:10px}
 }
 
-/* --- Visual refresh: warmer surfaces, elevation, and clearer hierarchy --- */
-:root{--blue-050:#eef1fb;--blue-100:#dce3f8;--red-050:#fbebec;--shadow-xs:0 1px 2px rgba(16,22,44,.05);--shadow-sm:0 2px 8px rgba(16,22,44,.06);--shadow-md:0 10px 26px rgba(16,22,44,.10);--shadow-primary:0 6px 16px rgba(0,35,149,.22)}
-body{background:linear-gradient(180deg,#f5f8fd 0,#fff 340px)}
-.trip-head h1{color:var(--ink)}
-@supports ((background-clip:text) or (-webkit-background-clip:text)){
-.trip-head h1{background:linear-gradient(100deg,var(--ink) 45%,var(--blue) 145%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+/* Keep each itinerary entry visually grouped on every screen size. */
+body{background:#fff}
+main,.bar-inner{max-width:760px}
+.trip-head{padding-block:14px 18px}
+.trip-head h1{font-size:25px;letter-spacing:-.7px}
+.date-sticky{padding-top:8px}
+.dates{gap:4px;padding-bottom:8px}
+.date{flex-direction:column;gap:5px;min-height:58px;padding:9px 0;border-radius:10px}
+.date strong{font-size:16px}.date span{font-size:11px}
+.view{padding-top:20px}
+.day-top h2{font-size:22px}.day-region{line-height:1.5;margin-top:6px}
+.important{background:#f5f7fb;border-left:0;border-radius:10px;padding:12px 14px;box-shadow:none}
+.important.urgent{background:#fff3f3}
+.important.urgent strong{color:#b52b3a}
+.progress-row{padding-top:12px}
+.timeline{display:grid;gap:10px;margin-top:14px}
+.event,.event.transit{display:block;padding:12px 14px 4px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:none;scroll-margin-top:95px}
+.event-rail{display:flex;flex-direction:row;align-items:center;gap:6px;min-height:30px;margin-bottom:4px}
+.event-time,.event.transit .event-time{font-size:13px;font-weight:600;color:var(--blue);letter-spacing:0}
+.event-end{font-size:12px;margin:0;color:var(--muted)}
+.event-end:before{content:'– ';color:#9098a5}
+.complete-control{margin:-6px -5px -6px auto;width:auto;min-width:62px;height:44px;gap:6px;justify-content:flex-end;padding:0 5px;font-size:11px;color:var(--muted)}
+.complete-control input{width:19px;height:19px;border-radius:6px}
+.event-content{grid-template-columns:minmax(0,1fr) auto}
+.event-title,.event.transit .event-title{font-size:17px;font-weight:600;line-height:1.4;color:var(--ink);letter-spacing:-.2px}
+.event-caption{font-size:12px;margin-top:4px}
+.event-badges{margin:0 0 5px;gap:6px}.badge{background:none;padding:0;font-size:11px;font-weight:500}
+.event .event-links{gap:16px;margin-top:5px}
+.event .event-links a{font-size:12px}
+.event details>summary{font-size:12px;margin-top:5px;gap:5px}
+.event-detail-body{padding:10px 0 12px;border-top:1px solid var(--line)}
+.event-detail-body textarea{background:#f5f7fa}
+.event.transit{background:#f8f9fb;border-color:#f0f2f5}
+.event.transit .event-title{font-size:15px;font-weight:500}
+.event.completed{background:#f8fafb;border-color:#edf0f3}
+.event.current:before{display:none}.event.current{border-color:var(--blue)}
+.bottom-nav{background:#fff;box-shadow:none}.bottom-nav button[aria-current=page]{box-shadow:none;background:#f1f4fb}
+@media(min-width:700px){
+.bar-inner{padding:20px 28px 0}main{padding-inline:28px}
+.date-sticky{margin-inline:-28px;padding-inline:28px}
+.date{flex-direction:row;gap:9px;min-height:52px}
+.trip-head{padding-block:18px 22px}.trip-head h1{font-size:28px}
+.view{padding-top:24px}.day-top h2{font-size:25px}
+.event,.event.transit{padding:14px 18px 6px}.event-title{font-size:18px}
+.event-content{grid-template-columns:minmax(0,1fr) auto}
+.event .event-links{gap:20px}.event details>summary{justify-content:flex-start;min-width:85px}
+.bottom-nav{bottom:0;left:0;right:0;width:100%;transform:none;border:0;border-top:1px solid var(--line);border-radius:0;height:70px;padding:5px max(16px,calc((100vw - 520px)/2))}
 }
-.countdown{display:inline-flex;align-items:center;background:var(--blue-050);padding:4px 10px 5px;border-radius:20px}
-.date{border-radius:12px;transition:background .15s ease,color .15s ease,box-shadow .15s ease}
-.date[aria-pressed=true]{box-shadow:var(--shadow-md)}
-.date:not([aria-pressed=true]):hover{background:var(--soft)}
-.important{background:linear-gradient(135deg,var(--blue-050) 0%,#f6f8fb 100%);box-shadow:var(--shadow-xs)}
-.important.urgent{background:linear-gradient(135deg,var(--red-050) 0%,#fdf6f6 100%)}
-.event-badges{gap:6px}
-.badge{background:var(--blue-050);padding:3px 10px;border-radius:20px;font-weight:600;line-height:1.6}
-.badge.red{background:var(--red-050);color:#c53043}
-.badge.red:before{display:none}
-.badge.gray{background:var(--soft);color:var(--muted)}
-.event{box-shadow:none;transition:box-shadow .15s ease}
-.event:not(.transit){box-shadow:inset 3px 0 0 var(--blue-100)}
-.event.completed:not(.transit){box-shadow:inset 3px 0 0 var(--line)}
-.primary,.secondary,.small-button{border-radius:13px}
-.primary{box-shadow:var(--shadow-primary)}
-.primary:active{box-shadow:none}
-.pill{box-shadow:var(--shadow-xs)}
-.bottom-nav button[aria-current=page]{box-shadow:inset 0 0 0 1px var(--blue-100)}
-dialog{box-shadow:var(--shadow-md),0 24px 80px #0003}
-@media(prefers-contrast:more){.event:not(.transit){box-shadow:none;border-left:3px solid var(--blue)}
-.event.completed:not(.transit){border-left-color:var(--line)}
+@media(max-width:360px){
+.event,.event.transit{padding-inline:11px}.event .event-links{gap:10px}.event .event-links a,.event details>summary{font-size:11px}
+.day-top h2{font-size:20px}.date strong{font-size:15px}.date span{font-size:11px}
 }
+
+.event-after:before{content:''}
+/* A full-width details block avoids Safari's display:contents sizing. */
+.event .event-links{grid-column:1/-1;padding-right:85px}
+.event details{display:block;grid-column:1/-1;min-width:0}
+.event details>summary{width:80px;min-width:0;margin:-49px 0 0 auto;min-height:44px;justify-content:flex-end}
+.event-detail-body{width:100%;margin-top:5px}
