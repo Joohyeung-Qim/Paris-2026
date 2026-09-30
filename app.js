@@ -89,7 +89,8 @@
   if(p.address)content.append(el('p','event-address',p.address));
   if(e.id==='d17-essaim'&&!state.overrides[e.id])content.append(el('p','event-caption','All Night Long B2B · Deep / Hypnotic Techno · RA Pick'));
   const links=el('div','event-links');links.append(link('Google 지도',google(p.query),''),link('길찾기',directions('',p.query),''));content.append(links);
-  const details=document.createElement('details'),summary=el('summary','',state.notes[e.id]?'메모 있음':'상세·수정');details.append(summary);
+  const details=el('div','event-details');details.id='details-'+e.id;details.hidden=true;
+  const summary=button(state.notes[e.id]?'메모 있음':'상세·수정','detail-toggle',()=>{details.hidden=!details.hidden;summary.setAttribute('aria-expanded',String(!details.hidden));});summary.setAttribute('aria-expanded','false');summary.setAttribute('aria-controls',details.id);links.append(summary);
   const detailBody=el('div','event-detail-body');if(e.note)detailBody.append(el('p','event-note',e.note));if(e.fixed)detailBody.append(el('p','small muted','전달받은 예약 정보 기준'));
   if(p.url)detailBody.append(link(e.booking==='essaim'?'RA 티켓 ↗':e.booking?'예약·안내 ↗':'장소 안내 ↗',p.url,'detail-link'));
   const note=document.createElement('textarea');note.rows=2;note.maxLength=4000;note.placeholder='메모를 남겨두세요';note.value=state.notes[e.id]||'';note.setAttribute('aria-label',e.title+' 개인 메모');note.addEventListener('input',()=>{state.notes[e.id]=note.value;save();summary.textContent=note.value?'메모 있음':'상세·수정';});detailBody.append(note);
