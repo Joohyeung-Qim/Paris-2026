@@ -12,7 +12,7 @@
   for(const key of ['completed','packing']){if(!plain(s[key]))throw Error('체크 목록 형식 오류');for(const [k,v] of Object.entries(s[key])){if(!safeKey(k)||typeof v!=='boolean')throw Error('체크 목록 값 오류');n[key][k]=v;}}
   for(const key of ['notes','bookingNotes']){if(!plain(s[key]))throw Error('메모 형식 오류');for(const [k,v] of Object.entries(s[key])){if(!safeKey(k)||!str(v,4000))throw Error('메모 값 오류');n[key][k]=v;}}
   if(!plain(s.bookings)||!plain(s.overrides))throw Error('예약·일정 형식 오류');
-  for(const [k,v] of Object.entries(s.bookings)){if(!D.bookings.some(b=>b.id===k)||!['pending','done'].includes(v))throw Error('예약 값 오류');n.bookings[k]=v;}
+  for(const [k,v] of Object.entries(s.bookings)){if(!D.bookings.some(b=>b.id===k)||!['pending','done','waitlist'].includes(v))throw Error('예약 값 오류');n.bookings[k]=v;}
   for(const [k,v] of Object.entries(s.overrides)){if(!D.days.some(d=>d.items.some(e=>e.id===k)))throw Error('수정 일정 ID 오류');n.overrides[k]=validateEvent(v,false);}
   if(!Array.isArray(s.custom)||s.custom.length>200||!Array.isArray(s.deleted)||s.deleted.length>300||!Array.isArray(s.expenses)||s.expenses.length>1000)throw Error('목록 크기 또는 형식 오류');
   n.custom=s.custom.map(x=>validateEvent(x,true));if(new Set(n.custom.map(x=>x.id)).size!==n.custom.length)throw Error('중복 일정 ID');
@@ -28,8 +28,8 @@
  }
  let state=fresh(),storageOK=true;
  try{const raw=localStorage.getItem(KEY);if(raw)state=validate(JSON.parse(raw));}catch(e){storageOK=false;$('#storage-warning').hidden=false;}
+ let mapAll=true;
  let selected=17,view='schedule',filter='all',map=null,mapLayers=null,tileLayer=null,geoLayer=null,toastTimer=null,undoAction=null,editing=null,pendingImport=null;
- const routeAnchors=new Set(['d17-essaim','d17-essaim-home','d17-0','d17-3','d17-4','d17-6','d17-8','d17-10','d17-12','d17-14','d17-15','d18-2','d18-7','d18-9','d18-12','d19-2','d19-4','d19-7','d19-9','d19-11','d20-1','d20-2','d20-3','d20-5','d20-7','d20-9']);
  const day=n=>D.days.find(d=>d.day===Number(n));
  const baseEvents=D.days.flatMap(d=>d.items);
  const el=(t,c,text)=>{const n=document.createElement(t);if(c)n.className=c;if(text!==undefined)n.textContent=text;return n;};
@@ -48,57 +48,56 @@
  }
  function events(n){return [...baseEvents.map(e=>({...e,...state.overrides[e.id]})),...state.custom.map(e=>({...e,custom:true,place:'',transit:false,fixed:false,optional:false,booking:''}))].filter(e=>e.day===Number(n)&&!state.deleted.includes(e.id)).sort((a,b)=>(a.dayOffset||0)-(b.dayOffset||0)||a.start.localeCompare(b.start)||baseEvents.findIndex(e=>e.id===a.id)-baseEvents.findIndex(e=>e.id===b.id));}
  function checkCurrent(e){const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));const hm=v.hour+':'+v.minute;return v.year==='2026'&&v.month==='10'&&Number(v.day)===e.day+(e.dayOffset||0)&&hm>=e.start&&!!e.end&&hm<e.end;}
- function scrollToDates(){const rail=$('.trip-head');window.scrollTo({top:rail.getBoundingClientRect().bottom+window.scrollY,behavior:'instant'});}
- function selectDay(n){selected=n;renderDates();renderSchedule();if(view==='map')renderMap();scrollToDates();}
+ const weekdays={17:'SATURDAY',18:'SUNDAY',19:'MONDAY',20:'TUESDAY'};
+ const categoryNames={partisan:'DRINK',pompidou:'CULTURE',mesures:'DRINK',large:'CULTURE',flv:'CULTURE',babylone:'SHOP',nanna:'DRINK',orangerie:'CULTURE',grand:'FOOD',pinault:'CULTURE',shin:'DRINK',bouillon:'FOOD',essaim:'NIGHT',cdg:'TRANSIT',nord:'TRANSIT',ams:'TRANSIT',reaumur:'TRANSIT',mitterrand:'CULTURE',cartilage:'CULTURE'};
+ const areas={home:'Paris 3e',cdg:'Roissy-en-France',partisan:'Paris 3e',pompidou:'Paris 3e',mesures:'Paris 3e',large:'Boulogne-Billancourt',flv:'Paris 16e',babylone:'Paris 7e',nanna:'Paris 5e',orangerie:'Paris 1er',grand:'Paris 8e',pinault:'Paris 1er',shin:'Paris 1er',canal:'Paris 10e',bouillon:'Paris 3e',nord:'Paris 10e',ams:'Amsterdam Centrum',reaumur:'Paris 2e / 3e',mitterrand:'Paris 8e',cartilage:'Paris 12e',marais:'Paris 3e / 4e',saintgermain:'Paris 6e',palais:'Paris 1er',essaim:'Paris 10e'};
+ function category(e){if(/이동|복귀|출발|도착|수속|탑승|공항|→/.test(e.title))return 'TRANSIT';if(/점심|저녁|식사/.test(e.title))return 'FOOD';if(/휴식|짐 정리/.test(e.title))return 'PLACE';return categoryNames[e.place]||'PLACE';}
+ function selectDay(n){selected=n;if(view==='map')mapAll=false;renderDates();if(view==='map'){renderMap();return;}$('#day-'+n)?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}
  function renderDates(){
-  const tabs=$('#date-tabs');tabs.replaceChildren();
-  D.days.forEach(d=>{
-   const t=button('','date',()=>selectDay(d.day));
-   t.append(el('strong','',`10.${d.day}`),el('span','',`${d.weekday}요일`));
-   t.setAttribute('aria-pressed',String(d.day===selected));t.setAttribute('aria-label',`10월 ${d.day}일 ${d.weekday}요일`);tabs.append(t);
-  });
+  $('.date-sticky').hidden=view==='places';const tabs=$('#date-tabs');tabs.replaceChildren();
+  if(view==='map'){const all=button('ALL','date',()=>{mapAll=true;renderDates();renderMap();});all.setAttribute('aria-pressed',String(mapAll));tabs.append(all);}
+  D.days.forEach(d=>{const t=button(String(d.day)+' OCT','date',()=>selectDay(d.day));t.dataset.day=d.day;t.setAttribute('aria-pressed',String(d.day===selected&&!(view==='map'&&mapAll)));t.setAttribute('aria-label',`10월 ${d.day}일 ${d.weekday}요일`);tabs.append(t);});
  }
- function updateProgress(){
-  const all=events(selected),done=all.filter(e=>state.completed[e.id]).length;
-  $('#day-progress').textContent=`완료 ${done} / ${all.length} · 남은 일정 ${all.length-done}개`;
-  $('#completion-progress').max=all.length||1;$('#completion-progress').value=done;
- }
+ function updateProgress(){const all=D.days.flatMap(d=>events(d.day)),done=all.filter(e=>state.completed[e.id]).length;$('#day-progress').textContent=`전체 ${all.length}개 · 완료 ${done}개`;}
  function renderSchedule(){
-  const d=day(selected);$('#day-number').textContent=`10월 ${selected}일 · ${d.weekday}요일`;$('#day-title').textContent=d.title;$('#day-region').textContent=d.region;
-  const imp=$('#day-important');imp.replaceChildren(el('strong','',d.important),el('span','',d.brief));imp.classList.toggle('urgent',selected===20);
-  const all=events(selected),visible=filter==='key'?all.filter(e=>e.key):filter==='remaining'?all.filter(e=>!state.completed[e.id]):all;updateProgress();$('#empty-state').hidden=visible.length>0;$('#empty-state').textContent=filter==='remaining'&&all.length?'이날의 일정을 모두 완료했습니다.':'표시할 일정이 없습니다. 전체 보기를 선택하거나 일정을 추가하세요.';
-  const list=$('#timeline');list.replaceChildren();visible.forEach(e=>list.append(eventCard(e)));
-  $$('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)));
+  const list=$('#timeline');list.replaceChildren();let total=0;
+  D.days.forEach(d=>{
+   const all=events(d.day),visible=filter==='key'?all.filter(e=>e.key):filter==='remaining'?all.filter(e=>!state.completed[e.id]):all;total+=visible.length;
+   const section=el('section','plan-day');section.id='day-'+d.day;section.dataset.day=d.day;
+   const head=el('header','day-heading');head.append(el('p','eyebrow',weekdays[d.day]),el('h2','',d.day+' OCTOBER'),el('p','day-region',d.region));
+   const info=el('details','day-info'),summary=el('summary','','당일 참고');info.append(summary,el('p','',d.important),el('p','',d.brief));head.append(info);section.append(head);
+   const items=el('ol','timeline');visible.forEach(e=>items.append(eventCard(e)));if(!visible.length)items.append(el('li','empty-day','표시할 일정이 없습니다.'));section.append(items);list.append(section);
+  });
+  updateProgress();$('#empty-state').hidden=total>0;$$('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)));
  }
+ let scrollQueued=false;
+ window.addEventListener('scroll',()=>{if(view!=='schedule'||scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;const sections=$$('.plan-day');let current=17;for(const section of sections){if(section.getBoundingClientRect().top<=130)current=Number(section.dataset.day);}if(current!==selected){selected=current;renderDates();}});},{passive:true});
  function eventCard(e){
   const li=el('li','event'+(e.transit?' transit':'')+(state.completed[e.id]?' completed':'')+(checkCurrent(e)?' current':''));li.id='event-'+e.id;
   const rail=el('div','event-rail'),time=el('time','event-time',e.start);time.dateTime=`2026-10-${e.day+(e.dayOffset||0)}T${e.start}:00+02:00`;rail.append(time);
-  if(e.end)rail.append(el('span','event-end',e.end));else if(e.after)rail.append(el('span','event-end event-after','이후'));
+  if(e.end)rail.append(el('span','event-end','— '+e.end));else if(e.after)rail.append(el('span','event-end event-after','이후'));
   const label=el('label','complete-control'),check=document.createElement('input');check.type='checkbox';check.checked=!!state.completed[e.id];check.setAttribute('aria-label',e.title+' 완료');check.addEventListener('change',()=>{state.completed[e.id]=check.checked;save();li.classList.toggle('completed',check.checked);updateProgress();if(filter==='remaining'){renderSchedule();toast('완료했습니다.',()=>{state.completed[e.id]=false;});}});label.append(check,el('span','','완료'));rail.append(label);
   const content=el('div','event-content'),p=eventPlace(e),badges=el('div','event-badges');
   if(e.dayOffset)badges.append(el('span','badge',`다음 날 10/${e.day+e.dayOffset} 새벽`));
-  if(e.optional)badges.append(el('span','badge gray','선택'));
-  if(e.booking)badges.append(el('span',state.bookings[e.booking]==='done'?'badge':'badge red',state.bookings[e.booking]==='done'?'확인 완료':'예약·확인 필요'));
+  if(e.optional)badges.append(el('span','status-text','선택 일정'));
+  if(e.booking)badges.append(el('span',state.bookings[e.booking]==='done'?'badge':'badge red',state.bookings[e.booking]==='done'?'BOOKED':state.bookings[e.booking]==='waitlist'?'WAITLIST':'예약·확인 필요'));
   if(state.overrides[e.id])badges.append(el('span','badge gray','수정됨'));
   if(checkCurrent(e))badges.append(el('span','badge','현재 일정'));
   if(badges.childNodes.length)content.append(badges);
-  content.append(el('h3','event-title',e.title));
+  content.append(el('h3','event-title',e.title==='파리 도착'?'CDG · Terminal 1':e.title));
+  const meta=el('p','event-meta');meta.append(el('span','category',category(e)));if(e.title==='파리 도착')meta.append(el('span','','Arrival'));else if(areas[e.place])meta.append(el('span','',areas[e.place]));content.append(meta);
+  if(p.address)content.append(el('p','event-address',p.address));
   if(e.id==='d17-essaim'&&!state.overrides[e.id])content.append(el('p','event-caption','All Night Long B2B · Deep / Hypnotic Techno · RA Pick'));
-  // Keep the main list short. Full addresses, itinerary notes and editing live in details.
-  const categories={partisan:'카페',pompidou:'전시 · 무료',mesures:'음악 바',large:'미술관 · Moteur Imaginaire',flv:'미술관 · Mohammad Alfaraj',babylone:'아트북 · 레코드',nanna:'선상 독서공간 · 바',orangerie:'미술관 · Monet, peindre le temps',grand:'점심',pinault:'미술관 · 10월 신전시 · Irving Penn / Depardon',shin:'카페',bouillon:'점심'};
-  if(categories[e.place]&&e.title===p.name)content.append(el('p','event-caption',categories[e.place]));
-  const links=el('div','event-links');links.append(link('Google 지도 ↗',google(p.query),''),link('길찾기 ↗',directions('',p.query),''));content.append(links);
+  const links=el('div','event-links');links.append(link('Google 지도',google(p.query),''),link('길찾기',directions('',p.query),''));content.append(links);
   const details=document.createElement('details'),summary=el('summary','',state.notes[e.id]?'메모 있음':'상세·수정');details.append(summary);
-  const detailBody=el('div','event-detail-body');if(p.address)detailBody.append(el('p','event-address',p.address));if(e.note)detailBody.append(el('p','event-note',e.note));if(e.fixed)detailBody.append(el('p','small muted','전달받은 예약 정보 기준'));
+  const detailBody=el('div','event-detail-body');if(e.note)detailBody.append(el('p','event-note',e.note));if(e.fixed)detailBody.append(el('p','small muted','전달받은 예약 정보 기준'));
   if(p.url)detailBody.append(link(e.booking==='essaim'?'RA 티켓 ↗':e.booking?'예약·안내 ↗':'장소 안내 ↗',p.url,'detail-link'));
   const note=document.createElement('textarea');note.rows=2;note.maxLength=4000;note.placeholder='메모를 남겨두세요';note.value=state.notes[e.id]||'';note.setAttribute('aria-label',e.title+' 개인 메모');note.addEventListener('input',()=>{state.notes[e.id]=note.value;save();summary.textContent=note.value?'메모 있음':'상세·수정';});detailBody.append(note);
   const actions=el('div','edit-actions');actions.append(button('수정','',()=>openEditor(e)),button('일정에서 제외','danger',()=>{state.deleted.push(e.id);save();renderSchedule();toast('일정에서 제외했습니다.',()=>{state.deleted=state.deleted.filter(id=>id!==e.id);});}));if(state.overrides[e.id])actions.prepend(button('원안 복원','',()=>{const old=state.overrides[e.id];delete state.overrides[e.id];save();renderSchedule();toast('원안으로 복원했습니다.',()=>state.overrides[e.id]=old);}));detailBody.append(actions);details.append(detailBody);content.append(details);li.append(rail,content);return li;
  }
- function setView(next){view=next;$$('.view').forEach(v=>v.hidden=v.id!=='view-'+view);$$('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});if(view==='map')renderMap();if(view==='bookings')renderBookings();if(view==='more')renderMore();scrollToDates();}
+ function setView(next){view=next;$$('.view').forEach(v=>v.hidden=v.id!=='view-'+view);$$('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});renderDates();if(view==='map')renderMap();if(view==='places'){renderMore();renderBookings();}if(view==='schedule')$('#day-'+selected)?.scrollIntoView({block:'start',behavior:'instant'});else window.scrollTo({top:0,behavior:'instant'});}
  $$('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
- $$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;renderSchedule();}));
- $('#route-shortcut').addEventListener('click',()=>setView('map'));
- $('#open-search').addEventListener('click',()=>{setView('more');$('#place-finder').open=true;$('#place-search').focus();$('#place-finder').scrollIntoView({block:'start',behavior:'instant'});});
+ $$('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;renderSchedule();$('#day-'+selected)?.scrollIntoView({block:'start',behavior:'instant'});}));
  function copy(text){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(()=>toast('복사했습니다.')).catch(()=>fallbackCopy(text));}else fallbackCopy(text);}
  function fallbackCopy(text){const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.top='-999px';document.body.append(t);t.select();let ok=false;try{ok=document.execCommand('copy');}catch{}t.remove();toast(ok?'복사했습니다.':'복사할 수 없습니다. 주소를 길게 눌러 복사하세요.');}
  function renderBookings(){
@@ -106,11 +105,13 @@
   const host=$('#bookings-list');host.replaceChildren();host.className='bookings-grid';D.bookings.forEach(b=>{
    const card=el('section','panel');card.append(el('h3','booking-title',b.title),el('p','booking-time',b.when),el('p','booking-note',b.note));
    const links=el('div','event-links');if(b.url)links.append(link('공식 예약·안내',b.url,''));links.append(link('Google 지도',google(D.places[b.place].query),'outline'));card.append(links);
-   const controls=el('div','booking-controls'),label=el('label','','상태'),select=document.createElement('select');select.setAttribute('aria-label',b.title+' 상태');for(const [value,text] of [['pending','미확인'],['done',b.type==='check'?'확인 완료':'예약 완료']]){const o=el('option','',text);o.value=value;select.append(o);}select.value=state.bookings[b.id]||'pending';select.addEventListener('change',()=>{state.bookings[b.id]=select.value;save();$('#booking-progress').textContent=D.bookings.filter(b=>state.bookings[b.id]==='done').length+' / '+D.bookings.length;renderSchedule();});label.append(select);
+   const controls=el('div','booking-controls'),label=el('label','','상태'),select=document.createElement('select');select.setAttribute('aria-label',b.title+' 상태');for(const [value,text] of [['pending','미확인'],['done',b.type==='check'?'확인 완료':'예약 완료'],['waitlist','대기 명단']]){const o=el('option','',text);o.value=value;select.append(o);}select.value=state.bookings[b.id]||'pending';select.addEventListener('change',()=>{state.bookings[b.id]=select.value;save();$('#booking-progress').textContent=D.bookings.filter(b=>state.bookings[b.id]==='done').length+' / '+D.bookings.length;renderSchedule();});label.append(select);
    const noteLabel=el('label','','예약 메모'),input=document.createElement('textarea');input.rows=2;input.maxLength=4000;input.value=state.bookingNotes[b.id]||'';input.placeholder='예약 번호·확정 시간 등';input.setAttribute('aria-label',b.title+' 예약 메모');input.addEventListener('input',()=>{state.bookingNotes[b.id]=input.value;save();});noteLabel.append(input);controls.append(label,noteLabel);card.append(controls);host.append(card);
   });
  }
- function renderPlaces(){const q=$('#place-search').value.trim().toLocaleLowerCase();const host=$('#places-list');host.replaceChildren();const places=Object.values(D.places).filter(p=>(p.name+' '+p.address+' '+p.query).toLocaleLowerCase().includes(q));if(!places.length)host.append(el('p','muted small','검색 결과가 없습니다.'));places.forEach(p=>{const row=el('div','place-result');row.append(el('strong','',p.name),el('p','',p.address));const links=el('div','event-links');links.append(link('Google 지도',google(p.query),''));if(p.url)links.append(link('안내',p.url,'outline'));row.append(links);host.append(row);});}
+ function savedPlaces(){const result=Object.values(D.places).map(p=>({...p,category:categoryNames[p.id]||'PLACE',area:areas[p.id]||''}));D.days.flatMap(d=>events(d.day)).filter(e=>e.custom||state.overrides[e.id]?.address!==undefined&&state.overrides[e.id].address!==(D.places[e.place]?.address||'')).forEach(e=>{const p=eventPlace(e);if(!result.some(x=>x.query===p.query))result.push({...p,id:e.id,category:category(e),area:e.address,detail:e.note});});return result;}
+ function renderPlaces(){const q=$('#place-search').value.trim().toLocaleLowerCase(),all=savedPlaces(),host=$('#places-list');host.replaceChildren();$('#place-count').textContent=String(all.length).padStart(2,'0')+' SAVED';const places=all.filter(p=>(p.name+' '+p.address+' '+p.query+' '+p.category).toLocaleLowerCase().includes(q));if(!places.length)host.append(el('p','muted small','검색 결과가 없습니다.'));places.forEach(p=>{const row=button('','place-row',()=>openPlace(p));row.append(el('span','place-index',String(all.findIndex(x=>x.id===p.id)+1).padStart(2,'0')));const body=el('span','place-body');body.append(el('span','place-name',p.name),el('span','place-meta',p.category+' · '+p.area));row.append(body);host.append(row);});}
+ function openPlace(p){const host=$('#place-detail');host.replaceChildren();const title=el('h2','place-detail-title',p.name);title.id='place-title';host.append(title,el('p','place-meta',p.category+' · '+p.area),el('p','place-detail-address',p.address));const links=el('div','detail-links');links.append(link('OPEN IN MAPS',google(p.query),''),link('길찾기',directions('',p.query),''));if(p.url)links.append(link(p.id==='essaim'?'RA 티켓':'공식·안내',p.url,''));host.append(links,el('h3','eyebrow notes-heading','NOTES'));if(p.detail)host.append(el('p','event-note',p.detail));const note=document.createElement('textarea');note.rows=4;note.maxLength=4000;note.placeholder='장소 메모';note.setAttribute('aria-label',p.name+' 장소 메모');note.value=state.notes['place-'+p.id]||'';note.addEventListener('input',()=>{state.notes['place-'+p.id]=note.value;save();});host.append(note);const visits=D.days.flatMap(d=>events(d.day)).filter(e=>e.place===p.id&&!e.transit);if(visits.length){host.append(el('h3','eyebrow notes-heading','PLAN'));visits.forEach(e=>{host.append(button(`10.${e.day} · ${e.dayOffset?'다음 날 ':''}${e.start} · ${e.title}`,'visit-link',()=>{$('#place-dialog').close();setView('schedule');selectDay(e.day);$('#event-'+e.id)?.scrollIntoView({block:'start',behavior:'instant'});}));});}$('#place-dialog').showModal();}
  function renderMore(){
   const home=$('#home-links');home.replaceChildren(link('Google 지도',google(D.places.home.query)),button('주소 복사','secondary',()=>copy(D.places.home.address)),link('숙소로 길찾기',directions('',D.places.home.query)));renderPlaces();
   const alt=$('#alternatives');alt.replaceChildren();D.alternatives.forEach(a=>{const p=D.places[a.place],row=el('div','place-result');row.append(el('strong','',a.title),el('p','',a.note));const links=el('div','event-links');links.append(link('Google 지도',google(p.query),''),link('방문 조건 확인',p.url,'outline'));row.append(links);alt.append(row);});
@@ -127,16 +128,17 @@
   if(editing?.custom){const i=state.custom.findIndex(x=>x.id===editing.id);state.custom[i]={...v,id:editing.id};}else if(editing){state.overrides[editing.id]=v;}else{state.custom.push({...v,id:'custom-'+uid()});}
   selected=v.day;save();$('#edit-dialog').close();renderDates();renderSchedule();if(view==='map')renderMap();toast(storageOK?'일정을 저장했습니다.':'일정은 반영됐지만 기기 저장에 실패했습니다.');});
  function route(){
-  const d=day(selected),items=events(selected).filter(e=>routeAnchors.has(e.id)||e.custom);
+  if(mapAll)return savedPlaces().map((p,i)=>({id:p.id,place:p.id,p,time:'',num:i+1}));
+  const items=events(selected).filter(e=>e.custom||e.place);
   const result=items.map(e=>({id:e.id,place:e.place,p:eventPlace(e),time:e.start,optional:e.optional}));
   if([18,19].includes(selected))result.unshift({id:'start-home',place:'home',p:D.places.home,time:'출발'});
   return result.filter((r,i)=>i===0||r.p.query!==result[i-1].p.query).map((r,i)=>({...r,num:i+1}));
  }
  function modeFor(a,b){const d=day(selected);const i=d.route.findIndex((p,i)=>p===a.place&&d.route[i+1]===b.place);return i>=0?d.modes[i]:'';}
  function renderMap(){
-  $('#map-region').textContent='10월 '+selected+'일 · '+day(selected).title;
+  $('#map-region').textContent=mapAll?'저장한 장소 전체':'10월 '+selected+'일 · '+day(selected).title;$('#map-note').textContent=mapAll?'저장한 장소 · 번호를 눌러 상세 확인':'번호는 방문 순서 · 점선은 위치 연결선입니다. 실제 경로는 구간별 길찾기에서 확인하세요.';
   const r=route(),cityOnly=$('#city-only').checked,shown=r.filter(x=>x.p.latlng&&(!cityOnly||!['cdg','ams'].includes(x.place)));
-  const legs=$('#route-list');legs.replaceChildren();for(let i=1;i<r.length;i++){const a=r[i-1],b=r[i],mode=modeFor(a,b);const row=el('div','route-leg');row.append(el('p','leg-title',a.num+'. '+a.p.name+' → '+b.num+'. '+b.p.name),el('p','leg-mode',(mode==='walking'?'도보':mode==='transit'?'대중교통':'이동수단 선택')+(b.optional?' · 선택 일정':'')),link('이 구간 길찾기',directions(a.p.query,b.p.query,mode)));legs.append(row);}
+  const legs=$('#route-list');legs.replaceChildren();for(let i=1;!mapAll&&i<r.length;i++){const a=r[i-1],b=r[i],mode=modeFor(a,b);const row=el('div','route-leg');row.append(el('p','leg-title',a.num+'. '+a.p.name+' → '+b.num+'. '+b.p.name),el('p','leg-mode',(mode==='walking'?'도보':mode==='transit'?'대중교통':'이동수단 선택')+(b.optional?' · 선택 일정':'')),link('이 구간 길찾기',directions(a.p.query,b.p.query,mode)));legs.append(row);}
   if(r.some(x=>!x.p.latlng))legs.append(el('p','small muted','추가·수정한 주소와 넓은 지역은 지도 핀이 없을 수 있습니다. Google 지도에서 위치를 확인하세요.'));
   if(!window.L){$('#map-fallback').hidden=false;return;}
   if(!map){map=L.map('map',{scrollWheelZoom:false,zoomControl:true}).setView(D.places.home.latlng,13);map.attributionControl.setPrefix(false);mapLayers=L.layerGroup().addTo(map);
@@ -144,13 +146,13 @@
   }
   mapLayers.clearLayers();$('#map-selection').hidden=true;
   // Break at unknown/excluded coordinates; never connect across an omitted destination.
-  for(let i=1;i<r.length;i++){const a=r[i-1],b=r[i];if(shown.includes(a)&&shown.includes(b))L.polyline([a.p.latlng,b.p.latlng],{color:b.place==='ams'?'#ed2939':'#002395',weight:3,opacity:.55,dashArray:'6 8',interactive:false}).addTo(mapLayers);}
+  for(let i=1;!mapAll&&i<r.length;i++){const a=r[i-1],b=r[i];if(shown.includes(a)&&shown.includes(b))L.polyline([a.p.latlng,b.p.latlng],{color:'#54534f',weight:1,opacity:.7,dashArray:'6 8',interactive:false}).addTo(mapLayers);}
   const unique=new Map();shown.forEach(x=>{const key=x.p.latlng.join(',');if(!unique.has(key))unique.set(key,[]);unique.get(key).push(x);});
-  unique.forEach(group=>{const first=group[0],nums=group.map(x=>x.num).join('·');const icon=L.divIcon({className:'',html:'<span class="map-pin'+(first.place==='home'?' home':'')+'">'+first.num+'</span>',iconSize:[34,34],iconAnchor:[17,17]});const marker=L.marker(first.p.latlng,{icon,title:nums+' '+first.p.name,alt:nums+' '+first.p.name,keyboard:true}).addTo(mapLayers);const tip=el('span','',nums+' '+first.p.name);marker.bindTooltip(tip,{direction:'top'});marker.on('click',()=>{const host=$('#map-selection');host.hidden=false;host.replaceChildren(el('strong','',nums+'. '+first.p.name),el('p','small muted',first.p.address));if(first.p.detail)host.append(el('p','small muted',first.p.detail));const links=el('div','event-links');links.append(link('Google 지도',google(first.p.query),''),link('길찾기',directions('',first.p.query),''));host.append(links);});});
+  unique.forEach(group=>{const first=group[0],nums=group.map(x=>x.num).join('·');const icon=L.divIcon({className:'',html:'<span class="map-pin'+(first.place==='home'?' home':'')+'">'+first.num+'</span>',iconSize:[34,34],iconAnchor:[17,17]});const marker=L.marker(first.p.latlng,{icon,title:nums+' '+first.p.name,alt:nums+' '+first.p.name,keyboard:true}).addTo(mapLayers);const tip=el('span','',nums+' '+first.p.name);marker.bindTooltip(tip,{direction:'top'});marker.on('click',()=>{const host=$('#map-selection');host.hidden=false;host.replaceChildren(el('strong','',nums+'. '+first.p.name),el('p','small muted',first.p.address));if(first.p.detail)host.append(el('p','small muted',first.p.detail));const links=el('div','event-links');links.append(link('Google 지도',google(first.p.query),''),link('길찾기',directions('',first.p.query),''));links.append(button('장소 상세','',()=>openPlace({...first.p,id:first.p.id||first.id,category:categoryNames[first.place]||'PLACE',area:areas[first.place]||''})));host.append(links);});});
   map.invalidateSize();if(shown.length)map.fitBounds(L.latLngBounds(shown.map(x=>x.p.latlng)),{padding:[35,35],maxZoom:15,animate:false});
  }
  $('#city-only').addEventListener('change',renderMap);$('#fit-map').addEventListener('click',renderMap);
- $('#locate-me').addEventListener('click',()=>{if(!navigator.geolocation){toast('현재 위치를 지원하지 않는 브라우저입니다.');return;}navigator.geolocation.getCurrentPosition(pos=>{if(!map)return;if(geoLayer)map.removeLayer(geoLayer);geoLayer=L.circleMarker([pos.coords.latitude,pos.coords.longitude],{radius:8,color:'#fff',weight:3,fillColor:'#0071e3',fillOpacity:1}).addTo(map).bindTooltip('내 위치');map.setView([pos.coords.latitude,pos.coords.longitude],15);},()=>toast('위치를 확인할 수 없습니다. 위치 권한을 확인하세요.'),{enableHighAccuracy:false,timeout:10000,maximumAge:60000});});
+ $('#locate-me').addEventListener('click',()=>{if(!navigator.geolocation){toast('현재 위치를 지원하지 않는 브라우저입니다.');return;}navigator.geolocation.getCurrentPosition(pos=>{if(!map)return;if(geoLayer)map.removeLayer(geoLayer);geoLayer=L.circleMarker([pos.coords.latitude,pos.coords.longitude],{radius:8,color:'#fff',weight:3,fillColor:'#252522',fillOpacity:1}).addTo(map).bindTooltip('내 위치');map.setView([pos.coords.latitude,pos.coords.longitude],15);},()=>toast('위치를 확인할 수 없습니다. 위치 권한을 확인하세요.'),{enableHighAccuracy:false,timeout:10000,maximumAge:60000});});
  function icsEscape(s){return String(s).replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/;/g,'\\;').replace(/,/g,'\\,');}
  function icsStamp(day,time){const [h,m]=time.split(':').map(Number);return new Date(Date.UTC(2026,9,day,h-2,m)).toISOString().replace(/[-:]/g,'').replace('.000','');} // Paris and Amsterdam are UTC+2 on 17–20 Oct 2026.
  function fold(line){const lines=[];let part='',size=0;for(const char of line){const len=new TextEncoder().encode(char).length;if(size+len>74){lines.push(part);part=' '+char;size=1+len;}else{part+=char;size+=len;}}lines.push(part);return lines.join('\r\n');}
@@ -163,11 +165,10 @@
  $('#import-file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>2*1024*1024)throw Error('백업 파일이 너무 큽니다.');const data=JSON.parse(await file.text());if(data.app!=='paris-2026-plans')throw Error('이 앱의 백업 파일이 아닙니다.');pendingImport=validate(data.state);$('#confirm-dialog').showModal();}catch(err){toast(err.message||'백업을 읽을 수 없습니다.');}finally{e.target.value='';}});
  $('#confirm-import').addEventListener('click',()=>{if(!pendingImport)return;const previous=state;state=pendingImport;pendingImport=null;save();$('#confirm-dialog').close();renderAll();toast('백업을 불러왔습니다.',()=>{state=previous;});});
  $('#print-plan').addEventListener('click',()=>{let root=$('.print-only');if(root)root.remove();root=el('div','print-only');D.days.forEach(d=>{const section=el('section','print-day');section.append(el('h2','',`10/${d.day} (${d.weekday}) · ${d.title}`));events(d.day).forEach(e=>{const p=eventPlace(e),row=el('div','print-item');row.append(el('strong','',`${e.dayOffset?'다음 날 10/'+(e.day+e.dayOffset)+' ':''}${e.start}${e.end?'–'+e.end:''} ${e.title}`),el('p','',p.address),el('p','',e.note));if(state.notes[e.id])row.append(el('p','','메모: '+state.notes[e.id]));section.append(row);});root.append(section);});$('#main').append(root);window.print();});
- function updateClock(){const now=new Date();$('#paris-clock').textContent='현지 '+new Intl.DateTimeFormat('ko-KR',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(now);const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);const diff=Math.ceil((Date.UTC(2026,9,17)-Date.parse(date+'T00:00:00Z'))/86400000);$('#countdown').textContent=diff>0?'D−'+diff:date<='2026-10-20'?'여행 중':'여행 종료';}
  function connection(){const offline=!navigator.onLine;$('#offline-banner').hidden=!offline;}
  function renderAll(){renderDates();renderSchedule();renderBookings();renderMore();if(view==='map')renderMap();}
  try{const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());if(today>='2026-10-17'&&today<='2026-10-20')selected=Number(today.slice(-2));}catch{}
- renderAll();updateClock();setInterval(updateClock,60000);connection();window.addEventListener('online',connection);window.addEventListener('offline',connection);
+ renderAll();if(selected!==17)requestAnimationFrame(()=>$('#day-'+selected)?.scrollIntoView({block:'start',behavior:'instant'}));connection();window.addEventListener('online',connection);window.addEventListener('offline',connection);
  if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
   navigator.serviceWorker.register('./sw.js').then(()=>navigator.serviceWorker.ready).then(()=>{$('#offline-status').textContent='오프라인 일정 저장 완료 · 지도는 인터넷 연결 필요';}).catch(()=>{$('#offline-status').textContent='오프라인 저장 실패 · 인터넷 연결 상태에서 이용하세요.';});
  }
