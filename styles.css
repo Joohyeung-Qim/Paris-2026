@@ -238,6 +238,53 @@ to{opacity:1;transform:translateY(0)}
 .trip-head p span{margin-left:8px}
 }
 
+/* Mobile schedule: fixed time column, compact rows, full-width expanded notes. */
+.event-details{grid-column:1/-1}
+.event-details .complete-control{margin-left:auto;min-width:44px;min-height:44px;justify-content:flex-end;font-size:12px}
+.event-details .event-address{margin:0 0 12px}
+@media(max-width:759px){
+:root{--gutter:20px}
+.trip-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0}
+.trip-head h1{font-size:32px;line-height:1.1;letter-spacing:-.03em}
+.trip-head p{margin:0;font-size:11px;line-height:1.5;letter-spacing:.04em;text-align:right}
+.trip-head p span{display:block;margin:2px 0 0;font-size:10px}
+.date{min-height:44px}
+.plan-tools{padding:0;font-size:11px}
+.filters{gap:16px}
+.plan-day{padding-top:12px}
+.plan-day+.plan-day{margin-top:24px;padding-top:20px}
+.day-heading{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0 16px;margin-bottom:12px}
+.day-heading .eyebrow{font-size:10px}
+.day-heading h2{font-size:20px;margin-top:2px;line-height:1.3}
+.day-info{margin:0;font-size:12px}
+.day-info summary{min-height:44px;font-size:11px}
+.day-info[open]{flex-basis:100%}
+.event{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:12px;padding:12px 0}
+.event-rail{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:0;padding-top:1px}
+.event-time{font-size:14px;line-height:1.6;letter-spacing:0}
+.event-end{font-size:10px;white-space:nowrap;line-height:1.6}
+.event-title,.event.transit .event-title{font-size:16px;font-weight:500;line-height:1.4;letter-spacing:-.01em;word-break:keep-all;overflow-wrap:anywhere}
+.event-meta{margin-top:4px;font-size:11px;gap:4px 8px;line-height:1.5}
+.category{font-size:9px;letter-spacing:.05em}
+.event-badges{gap:4px 8px;margin:4px 0 0;font-size:10px}
+.event .event-links{margin-top:0;gap:12px;font-size:11px}
+.event .event-links a,.event .event-links button{min-height:44px}
+.event .detail-toggle{margin-left:auto}
+.event-detail-body{padding:8px 0 4px}
+.event-note{font-size:13px}
+.event.current:before{top:14px;left:-8px}
+.screen-heading{margin:16px 0 12px}
+.screen-heading h2{font-size:24px}
+.place-row{gap:12px;padding:16px 0}
+.place-name{font-size:16px}
+.place-meta{font-size:11px}
+.place-index{padding-top:2px}
+#places-list{margin:0 0 24px}
+.map-toolbar{margin:8px 0}
+.bottom-nav{height:calc(56px + env(safe-area-inset-bottom));padding-left:20px;padding-right:20px}
+.schedule-footer{margin-top:24px}
+}
+
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
 }
 
