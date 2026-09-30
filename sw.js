@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='paris-plans-dd796d250bc7';
-const FILES=["./", "./index.html", "./styles.css?v=5d09d4358e17", "./data.js?v=40fd1c0846b6", "./app.js?v=30eadecb3814", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest?v=d22242565162", "./vendor/leaflet.js", "./vendor/leaflet.css"];
+const CACHE='paris-plans-2c8d1966dc04';
+const FILES=["./", "./index.html", "./styles.css?v=2370a1f573a0", "./data.js?v=b601a86be638", "./app.js?v=1053bda2bb68", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest?v=d22242565162", "./vendor/leaflet.js", "./vendor/leaflet.css"];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES.map(file=>new Request(file,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('paris-plans-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{

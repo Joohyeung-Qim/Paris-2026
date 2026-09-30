@@ -290,6 +290,19 @@ window.PARIS_DATA = {
       "source": null,
       "url": "",
       "detail": ""
+    },
+    "essaim": {
+      "id": "essaim",
+      "name": "Essaim",
+      "address": "14 Rue Philippe de Girard, 75010 Paris",
+      "query": "Essaim 14 Rue Philippe de Girard 75010 Paris",
+      "latlng": [
+        48.882308,
+        2.362078
+      ],
+      "source": "https://data.geopf.fr/geocodage/search?q=14+Rue+Philippe+de+Girard+75010+Paris&limit=1",
+      "url": "https://fr.ra.co/events/2515951",
+      "detail": "Garçon b2b Konduku · All Night Long B2B · Deep / Hypnotic Techno · RA Pick"
     }
   },
   "days": [
@@ -300,7 +313,7 @@ window.PARIS_DATA = {
       "title": "도착 · Le Marais",
       "region": "Partisan · Le Marais · Maison Pompidou",
       "important": "07:20 CDG 도착 · 13:00 체크인",
-      "brief": "짐 보관은 숙소에 미리 확인",
+      "brief": "짐 보관 사전 확인 · 밤 Essaim 24:00–04:00 방문 예정",
       "items": [
         {
           "id": "d17-0",
@@ -501,12 +514,60 @@ window.PARIS_DATA = {
           "id": "d17-15",
           "day": 17,
           "start": "21:00",
-          "end": "",
-          "after": true,
-          "title": "숙소 복귀",
-          "note": "피곤하면 저녁 이후 바로 복귀",
+          "end": "23:15",
+          "after": false,
+          "title": "숙소 복귀·휴식",
+          "note": "Essaim 출발 전 휴식·휴대폰 충전. 23:15 출발 예정.",
           "place": "home",
           "key": false,
+          "transit": true,
+          "fixed": false,
+          "optional": false,
+          "booking": ""
+        },
+        {
+          "id": "d17-essaim-out",
+          "day": 17,
+          "start": "23:15",
+          "end": "23:55",
+          "title": "Essaim으로 이동",
+          "place": "essaim",
+          "note": "숙소 → 14 Rue Philippe de Girard. 도보 또는 차량 이동에 입장 대기 여유를 포함한 계획 시간. 실제 경로는 길찾기에서 확인.",
+          "dayOffset": 0,
+          "after": false,
+          "key": true,
+          "transit": true,
+          "fixed": false,
+          "optional": false,
+          "booking": ""
+        },
+        {
+          "id": "d17-essaim",
+          "day": 17,
+          "start": "00:00",
+          "end": "04:00",
+          "title": "Essaim · Garçon b2b Konduku",
+          "place": "essaim",
+          "note": "방문 예정: 10/18(일) 00:00–04:00 (토요일 밤).\n행사 전체: RA 안내 10/17 23:00–다음 날 06:30.\n라인업: Garçon b2b Konduku · All Night Long B2B\n장르: Deep / Hypnotic Techno · RA Pick\n티켓: 약 €20부터(전달받은 금액). 실제 가격·판매 상태는 RA에서 확인.\n아직 예매하지 않은 계획 일정.",
+          "dayOffset": 1,
+          "after": false,
+          "key": true,
+          "transit": false,
+          "fixed": false,
+          "optional": false,
+          "booking": "essaim"
+        },
+        {
+          "id": "d17-essaim-home",
+          "day": 17,
+          "start": "04:00",
+          "end": "04:40",
+          "title": "Essaim → 숙소",
+          "place": "home",
+          "note": "10/18 새벽 귀가. 차량 호출 또는 야간 교통편을 현장에서 확인. 40분은 대기 포함 계획 여유이며 실시간 소요시간이 아닙니다.",
+          "dayOffset": 1,
+          "after": false,
+          "key": true,
           "transit": true,
           "fixed": false,
           "optional": false,
@@ -521,6 +582,8 @@ window.PARIS_DATA = {
         "pompidou",
         "home",
         "mesures",
+        "home",
+        "essaim",
         "home"
       ],
       "modes": [
@@ -530,7 +593,9 @@ window.PARIS_DATA = {
         "walking",
         "walking",
         "walking",
-        "walking"
+        "walking",
+        "",
+        ""
       ]
     },
     {
@@ -540,7 +605,7 @@ window.PARIS_DATA = {
       "title": "Large · Saint-Germain",
       "region": "Île Seguin · Fondation Louis Vuitton · Saint-Germain",
       "important": "11:00 Large 입장 예정",
-      "brief": "개관 주말 입장 방식 확인 · 이동 시간이 빠듯한 날",
+      "brief": "개관 주말 입장 방식 확인 · 이동 시간이 빠듯한 날 · 전날 Essaim 04:00 종료, 오전 일정은 컨디션에 따라 조정",
       "items": [
         {
           "id": "d18-0",
@@ -1215,6 +1280,15 @@ window.PARIS_DATA = {
       "url": "",
       "place": "home",
       "type": "check"
+    },
+    {
+      "id": "essaim",
+      "title": "Essaim · Garçon b2b Konduku",
+      "when": "10/17 밤 · 방문 10/18 00:00–04:00",
+      "note": "All Night Long B2B · RA Pick. 티켓 약 €20부터(전달받은 금액), 실제 가격·판매 상태 확인 필요. 행사 전체는 RA 기준 23:00–06:30.",
+      "url": "https://fr.ra.co/events/2515951",
+      "place": "essaim",
+      "type": "booking"
     }
   ],
   "alternatives": [
@@ -1268,6 +1342,7 @@ window.PARIS_DATA = {
     "cartilage": "https://www.timeout.fr/paris/actualites/cartilage-nouveau-lieu-scenes-alternatives-ancien-cabaret-libanais-030526",
     "cartier": "https://www.fondationcartier.com/programme/exposition/le-temps-des-recoltes-ibrahim-mahama",
     "large": "https://www.large-emerige.fr/",
-    "large-tourism": "https://parisjetaime.com/eng/culture/large-contemporary-art-ile-seguin-boulogne-billancourt-p4869"
+    "large-tourism": "https://parisjetaime.com/eng/culture/large-contemporary-art-ile-seguin-boulogne-billancourt-p4869",
+    "essaim": "https://fr.ra.co/events/2515951"
   }
 };

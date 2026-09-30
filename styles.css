@@ -397,3 +397,5 @@ main,.bar-inner{max-width:760px}
 .event details{display:block;grid-column:1/-1;min-width:0}
 .event details>summary{width:80px;min-width:0;margin:-49px 0 0 auto;min-height:44px;justify-content:flex-end}
 .event-detail-body{width:100%;margin-top:5px}
+
+.event-note{white-space:pre-line}
