@@ -312,8 +312,8 @@ window.PARIS_DATA = {
       "weekday": "토",
       "title": "도착 · Le Marais",
       "region": "Partisan · Le Marais · Maison Pompidou",
-      "important": "07:20 CDG 도착 · 13:00 체크인",
-      "brief": "짐 보관 사전 확인 · 밤 Essaim 24:00–04:00 방문 예정",
+      "important": "07:20 CDG 도착 · 11:00 짐 보관 · 13:00 체크인",
+      "brief": "11:00 짐 보관 후 Partisan · 밤 Essaim 24:00–04:00 방문 예정",
       "items": [
         {
           "id": "d17-0",
@@ -361,13 +361,28 @@ window.PARIS_DATA = {
           "booking": ""
         },
         {
-          "id": "d17-3",
+          "id": "d17-bag-wait",
           "day": 17,
           "start": "10:40",
           "end": "11:00",
           "after": false,
+          "title": "숙소 주변 대기",
+          "note": "짐 보관은 11:00부터 가능. 일찍 도착하면 짐을 가지고 숙소 주변에서 대기. 공항 이동이 늦어지면 대기 시간을 줄입니다.",
+          "place": "home",
+          "key": false,
+          "transit": false,
+          "fixed": false,
+          "optional": false,
+          "booking": ""
+        },
+        {
+          "id": "d17-3",
+          "day": 17,
+          "start": "11:00",
+          "end": "11:15",
+          "after": false,
           "title": "짐 보관",
-          "note": "숙소 사전 협의 · 불가하면 인근 유료 보관소",
+          "note": "숙소에서 11:00부터 보관 가능하다고 확인받음. 짐을 맡긴 뒤 Partisan으로 이동. 보관 절차에 15분 여유를 둡니다.",
           "place": "home",
           "key": true,
           "transit": false,
@@ -376,9 +391,24 @@ window.PARIS_DATA = {
           "booking": "bag-in"
         },
         {
+          "id": "d17-partisan-walk",
+          "day": 17,
+          "start": "11:15",
+          "end": "11:25",
+          "after": false,
+          "title": "숙소 → Partisan 도보 이동",
+          "note": "짐을 맡긴 뒤 도보 이동에 10분 여유를 둡니다.",
+          "place": "partisan",
+          "key": false,
+          "transit": true,
+          "fixed": false,
+          "optional": false,
+          "booking": ""
+        },
+        {
           "id": "d17-4",
           "day": 17,
-          "start": "11:00",
+          "start": "11:25",
           "end": "12:00",
           "after": false,
           "title": "Partisan Café Artisanal",
@@ -1266,8 +1296,8 @@ window.PARIS_DATA = {
     {
       "id": "bag-in",
       "title": "체크인 전 짐 보관",
-      "when": "10/17 10:40",
-      "note": "숙소에 미리 확인. 불가하면 인근 유료 보관소 이용.",
+      "when": "10/17 11:00–11:15",
+      "note": "숙소에서 11:00부터 보관 가능하다고 확인받음(10/16 전달). 10:40 도착 시 주변에서 대기 후 짐 보관 → Partisan 11:25 → 13:00 체크인.",
       "url": "",
       "place": "home",
       "type": "check"

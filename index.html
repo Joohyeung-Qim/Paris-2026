@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="./vendor/leaflet.css">
 <link rel="stylesheet" href="./styles.css?v=af6e2211d4eb">
 <script src="./vendor/leaflet.js" defer></script>
-<script src="./data.js?v=b601a86be638" defer></script>
+<script src="./data.js?v=c1d751ad1021" defer></script>
 <script src="./app.js?v=b8b461f8b35e" defer></script>
 </head>
 <body>
@@ -51,13 +51,13 @@
 <div id="bookings-list"></div>
 <section class="panel"><h3>교통 확인</h3><div class="link-stack"><a href="https://www.parisaeroport.fr/en/passengers/transport-parking/public-transport-paris/rer-b/cdg" target="_blank" rel="noopener noreferrer">공항 → 파리 · RER B <span>↗</span></a><a href="https://www.bonjour-ratp.fr/lignes-metro/ligne-4/" target="_blank" rel="noopener noreferrer">메트로 4호선 운행 <span>↗</span></a></div><p class="small muted">공항: CDGVAL → RER B → Gare du Nord → 4호선 → Réaumur–Sébastopol. 공사·운행 변경 확인.</p></section>
 </div></details>
-<section class="panel"><h3>숙소</h3><p class="address">60 Rue du Vertbois<br>75003 Paris</p><div class="info-pair"><span>체크인 <b>10/17 13:00</b></span><span>체크아웃 <b>10/20 11:00</b></span></div><div class="button-row" id="home-links"></div></section>
+<section class="panel"><h3>숙소</h3><p class="address">60 Rue du Vertbois<br>75003 Paris</p><div class="info-pair"><span>체크인 <b>10/17 13:00</b></span><span>체크아웃 <b>10/20 11:00</b></span></div><p class="small muted">10/17 짐 보관은 11:00부터 가능 · 11:00–11:15 보관 후 Partisan으로 이동</p><div class="button-row" id="home-links"></div></section>
 <section class="panel"><h3>출발·도착</h3><div class="transport-row"><span>10/17</span><div><strong>07:20 파리 도착</strong><p>CDG · Terminal 1</p></div></div><div class="transport-row"><span>10/20</span><div><strong>16:18 Gare du Nord 출발</strong><p>열차 9463 → 19:50 Amsterdam Centraal</p></div></div><p class="warning-text">Gare du Nord 도착 목표 15:20 · 짐 수령 14:15–14:45</p></section>
 <details class="panel"><summary>대체 장소</summary><div id="alternatives" class="details-body"></div></details>
 <section class="panel"><h3>준비 목록</h3><div id="packing-list"></div></section>
 <section class="panel"><div class="section-row"><h3>지출 기록</h3><strong id="expense-total">€0.00</strong></div><form id="expense-form" class="expense-form"><label><span class="sr-only">지출 내용</span><input name="label" placeholder="내용" maxlength="60" required></label><label><span class="sr-only">유로 금액</span><input name="amount" type="number" inputmode="decimal" min="0.01" max="99999" step="0.01" placeholder="€" required></label><button type="submit" class="primary">추가</button></form><div id="expenses"></div></section>
 <section class="panel"><h3>일정·데이터</h3><div class="data-actions"><button class="secondary" type="button" id="calendar-all">전체 캘린더 저장</button><button class="secondary" type="button" id="backup-export">백업 다운로드</button><button class="secondary" type="button" id="backup-import">백업 불러오기</button><button class="secondary" type="button" id="print-plan">일정 인쇄</button></div><input type="file" id="import-file" accept="application/json,.json" hidden><p class="small muted">완료·메모·예약·수정 내용은 이 기기에 저장됩니다. 다른 기기로 옮길 때 백업을 사용하세요.</p><p class="small muted" id="offline-status">오프라인 저장은 웹사이트 주소에서 지원됩니다.</p></section>
-<details class="panel"><summary>정보 기준·사용 방법</summary><div class="details-body"><p>일정·요금은 첨부 계획 기준(2026.09.12). 관광 시간은 계획이며 실제 예약·잔여석을 뜻하지 않습니다.</p><p>Large 개관·입장 방식, 전시와 영업시간은 방문 전에 공식 페이지에서 확인하세요. 숙소 짐 보관은 사전 협의가 필요합니다.</p><p>Musée de l’Orangerie·Pinault Collection 정기 무료일은 체류일과 겹치지 않습니다. Maison Pompidou는 퐁피두 본관과 다른 공간입니다.</p><p>Safari 공유 → 홈 화면에 추가. 이름은 Paris 2026 Plans, 아이콘은 프랑스 국기입니다.</p><p>오프라인에서는 마지막으로 저장된 일정과 메모를 볼 수 있습니다. 지도 바탕·공식 사이트·Google 지도는 연결이 필요합니다.</p><a href="./vendor/LEAFLET-LICENSE.txt">지도 라이브러리 라이선스</a></div></details>
+<details class="panel"><summary>정보 기준·사용 방법</summary><div class="details-body"><p>일정·요금은 첨부 계획 기준(2026.09.12). 10/17 짐 보관은 11:00부터 가능하다는 숙소 안내를 반영했습니다(2026.10.16 전달). 관광 시간은 계획이며 실제 예약·잔여석을 뜻하지 않습니다.</p><p>Large 개관·입장 방식, 전시와 영업시간은 방문 전에 공식 페이지에서 확인하세요. 10/20 체크아웃 후 짐 보관·수령은 별도 확인이 필요합니다.</p><p>Musée de l’Orangerie·Pinault Collection 정기 무료일은 체류일과 겹치지 않습니다. Maison Pompidou는 퐁피두 본관과 다른 공간입니다.</p><p>Safari 공유 → 홈 화면에 추가. 이름은 Paris 2026 Plans, 아이콘은 프랑스 국기입니다.</p><p>오프라인에서는 마지막으로 저장된 일정과 메모를 볼 수 있습니다. 지도 바탕·공식 사이트·Google 지도는 연결이 필요합니다.</p><a href="./vendor/LEAFLET-LICENSE.txt">지도 라이브러리 라이선스</a></div></details>
 </div></details>
 </section>
 <footer class="page-footer">모든 시간은 현지시간 · 변경 사항은 이 기기에 저장</footer>
